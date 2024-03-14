@@ -87,7 +87,7 @@ const ButtonContainer = styled.div`
   width: 80%;
   height: 100%;
   padding: 0 6px;
-  @media screem and (max-width: 640px) {
+  @media screen and (max-width: 640px) {
     display: none;
   }
 `;
@@ -177,11 +177,10 @@ const Navbar = () => {
           <NavLink href="#experience">Experience</NavLink>
           <NavLink href="#projects">Projects</NavLink>
           <NavLink href="#education">Education</NavLink>
-        
-          <ButtonContainer>
+        </NavItems>
+        <ButtonContainer>
             <GithubButton>Github Profile</GithubButton>
           </ButtonContainer>
-        </NavItems>
       </NavContainer>
       {
         open &&(
