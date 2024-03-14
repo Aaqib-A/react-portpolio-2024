@@ -3,9 +3,10 @@ export const Bio = {
     roles: [
       "Backend Developer",
       "Python Developer",
+      
     ],
     description:
-      "Backend Developer backed by 8 years of academics in IT seeking an opportunity to utilize my 3+ years of industry experience, skills and knowledge to create reliable and efficient user experience. I strive to contribute to the organization's success and success of the project by providing the best solutions and achieving the highest performance.",
+      "Experienced Backend Developer with 8 years of academics in IT and 3+ years of hands-on industry experience. I strive to contribute to the organization's success and success of the project by providing the best solutions and achieving the highest performance.",
     github: "https://github.com/Aaqib-A",
     resume:
       "https://drive.google.com/file/d/1jGJ32NQOAtdzDakcU3a21jT7i27lGg-Y/view?usp=drivesdk",
