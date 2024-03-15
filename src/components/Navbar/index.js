@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link as LinkR } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import {DiCssdeck} from 'react-icons/di';
 import { FaBars } from 'react-icons/fa';
-import { useTheme } from 'styled-components';
+
 // import { Bio } from '../../data/constants';
 
 const Nav = styled.div`
