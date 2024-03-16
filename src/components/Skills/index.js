@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { skills } from "../../data/constants"
+import { skills, yoe } from "../../data/constants"
 
 const Container = styled.div`
   display: flex;
@@ -123,7 +123,7 @@ const Skills = () => {
       <Wrapper>
         <Title>Skills</Title>
         <Desc>
-          Here are some of my skills I have been working on for the past 6 years.
+          Here are some of my skills I have been working on for the past {yoe} years.
         </Desc>
         <SkillsContainer>
           {skills.map((item) => (
