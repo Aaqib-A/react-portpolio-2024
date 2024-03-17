@@ -24,24 +24,21 @@ const Card = styled.div`
   overflow: hidden;
   flex-direction: column;
   gap: 12px;
-  transition: all 0.3s eas-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
     transform: translateY(-5px);
   }
-
   &:hover ${Document}{
     display: flex;
 
   }
-
   @media (max-width: 768px) {
     padding: 10px;
     gap: 8px;
     width:100%;
   }
-
   border: 1px solid ${({ theme }) => theme.border};
   box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
 `;
@@ -53,12 +50,12 @@ const Top = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 50px;
+  height: 80px;
   background-color: #000;
   border-radius: 10px;
   margin-top: 4px;
   @media (max-width: 768px) {
-    height: 40px;
+    height: 70px;
   }
 `;
 
@@ -113,6 +110,11 @@ const Span = styled.span`
   -webkit-box-orient: vertical;
   max-width: 100%;
   text-overflow: ellipsis;
+  
+  &:hover  {
+    -webkit-line-clamp: 8;
+  }
+
 `;
 
 const Grade = styled.span`

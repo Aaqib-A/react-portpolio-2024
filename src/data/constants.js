@@ -6,6 +6,10 @@ import getafix_logo from '../images/Icon/getafix_logo.png';
 import ugam_logo from '../images/Icon/ugam_logo.png';
 import iig_logo from '../images/Icon/iig_logo.png';
 import vit_logo from '../images/Icon/vit_logo.jpg';
+import pvpp_logo from '../images/Icon/pvpp_logo.png';
+import sbmp_logo from '../images/Icon/sbmp_icon.jpeg';
+import maha_logo from '../images/Icon/maha_logo.jpeg';
+
 
 
 
@@ -16,6 +20,8 @@ export const Bio = {
     roles: [
       "Backend Developer",
       "Python Developer",
+      "Web Developer",
+      "Node Js Developer"
     ],
     description:
       "Experienced Backend Developer with 8 years of academics in IT and 3+ years of hands-on industry experience. I strive to contribute to the organization's success and success of the project by providing the best solutions and achieving the highest performance.",
@@ -93,8 +99,12 @@ export const Bio = {
       title: "Libraries",
       skills: [
         {
-          name: "REST APIs",
+          name: "RESTful Web Services",
           image: ""
+        },
+        {
+          name: "APIs",
+          image: "",
         },
         {
           name: "Socket.io",
@@ -109,11 +119,7 @@ export const Bio = {
           image: ""
         },
         {
-          name: "",
-          image: ""
-        },
-        {
-          name: "",
+          name: "ReportLab",
           image: ""
         },
       ]
@@ -138,13 +144,13 @@ export const Bio = {
             "",
         },
         {
-          name: "Linux OS",
-          image: ""
-        },
-        {
           name: "Netlify",
           image:
             "https://seeklogo.com/images/N/netlify-logo-BD8F8A77E2-seeklogo.com.png",
+        },
+        {
+          name: "Linux OS",
+          image: ""
         },
         {
           name: "VS Code",
@@ -184,13 +190,30 @@ export const Bio = {
       Trained and mentored 2 employees to grow professionally and contribute to the team's success.
       Participating in code reviews and providing feedback to other developers.`,
       skills: [
-        "ReactJS",
-        "Redux",
-        "NodeJs",
-        "Material UI",
-        "HTML",
-        "CSS",
-        "JavaScript",
+        "Django",
+        "Express.js",
+
+        "Python",
+        "Node.js",
+        "Typescript",
+
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "ElasticSearch",
+
+        "REST APIs",
+        "Websockets",
+        "Socket.io",
+        "Docker",
+        "AWS",
+        "Git",
+        "Figma",
+        
+        "Linux OS",
+        
+        "Cron Jobs",
+        
       ],
       // doc: "https://firebasestorage.googleapis.com/v0/b/buckoid-917cf.appspot.com/o/Screenshot%20from%202023-05-28%2023-20-46.png?alt=media&token=5570f995-e8f4-4f12-bb2f-73bcf4b20730",
     },
@@ -205,16 +228,12 @@ export const Bio = {
       Using python language and a UI library tkinter, created a desktop application which reads encrypted data stored in files and converts it into graphs to help visualize the data provided.
       Using data science libraries pandas and mathplotlib, filtered data based on existing algorithms and created graphs that helps in visualization of the data provided.`,
       skills: [
-        "ReactJS",
-        "Redux",
-        "NodeJs",
-        "Material UI",
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "Docker",
-        "AWS",
-        "MongoDB",
+        "Python",
+        "Pandas",
+        "NumPy",
+        "C",
+        "TkInter",
+        "MatPlotLib",
       ],
     },
     {
@@ -226,11 +245,15 @@ export const Bio = {
       desc: `Created online surveys from Python, CSS, jQuery, XML and C# using front-end tools like Decipher and ConfirmIt.
       Co-ordinated with the clients to understand and suggest new requirements.`,
       skills: [
-        "Leadership",
-        "Mobile Application Development",
-        "Kotlin",
-        "XML",
-        "Figma",
+        "Python",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "jQuery",
+        "C#",
+        ".NET",
+        "ConfirmIT",
+        "Decipher",
       ],
     }
   ];
@@ -239,37 +262,37 @@ export const Bio = {
     {
       id: 3,
       img: vit_logo,
-      school: "Vidyalankaar Institute of Technology",
+      school: "Vidyalankar Institute of Technology",
       date: "Aug 2019 - Jan 2022",
       grade: "9.18 CGPA",
-      desc: "I completed my Masters degree at VIT, Wadala, where I wrote and published 2 IEEE papers revolving around AI and solidifying my knowledge in Information Technology. I have completed all the 4 semesters and have a CGPA of 9.18.", //During this time I was given an oportunity to work with Indian Institute of Technology to help them in their reasearch which I gladly accepted and worked for 1 year.",
+      desc: "I completed my Masters degree at VIT, Wadala, where I wrote and published 2 IEEE papers revolving around AI and solidifying my knowledge in Information Technology. I have completed all the 4 semesters and have a CGPA of 9.18. During this time I was given an oportunity to work with Indian Institute of Technology to help them in their reasearch which I gladly accepted and worked for 1 year.",
       degree: "(ME-IT) Masters in Engineering in Information Technology",
     },
     {
       id: 2,
-      img: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/methodist.png?alt=media&token=018a1b18-e2dd-4f34-8855-cff1b6b69fd3",
+      img: pvpp_logo,
       school: "Padmabhushan Vasantdada Patil Pratishthan's College of Engineering",
       date: "Apr 2015 - Apr 2018",
-      grade: "88.2%",
-      desc: "I completed my class 12 high school education at Methodist School, Dankuni, where I studied Science with Computer Science.",
+      grade: "7.4 CGPA",
+      desc: "I completed my bachelors in Engineering in Information Technology at PVPP, Sion, where I improved my already strong computer concepts like Operating Systems, Networking, Advance DBMS Concepts, Web Technologies, etc. ",
       degree: "(BE-IT) Bachelors in Engineering in Information Technology",
     },
     {
       id: 1,
-      img: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/methodist.png?alt=media&token=018a1b18-e2dd-4f34-8855-cff1b6b69fd3",
+      img: sbmp_logo,
       school: "Shri Bhabubhai Mafatlal Polytechnic  ",
       date: "July 2012 - July 2015",
-      grade: "92.3%",
-      desc: "I completed my class 10 education at Methodist School, Dankuni, where I studied Science with Computer Application.",
+      grade: "7.35 GPA",
+      desc: "I completed my technical diploma in engineering at SBMP, Ville Parle, where I studied the basic of Information Technology. It is here that I gained my love of programming where I was taught C, C++ and Java languages along with countless IT related techniques like Data Structures and Algorithm, Security, DBMS and a lot of ther subjects. I have created multiple projects including html websites, flash animations, and for final project SQL query builder using Java and MySQL.",
       degree: "Diploma in Engineering in Information Technology",
     },
     {
       id: 0,
-      img: "https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/methodist.png?alt=media&token=018a1b18-e2dd-4f34-8855-cff1b6b69fd3",
-      school: "Maharashtra State Board of Education",
-      date: "May 2015",
-      grade: "92.3%",
-      desc: "I completed my class 10 education at Methodist School, Dankuni, where I studied Science with Computer Application.",
+      img: maha_logo,
+      school: "Maharashtra State Board of Secondary and Higher Secondary Education",
+      date: "May 2012",
+      grade: "80.26 %",
+      desc: "I completed my class 10 education at Children Welfare Center High School, Versova, where I completed by basic education.",
       degree: "(X) Board Exams",
     },
   ];
