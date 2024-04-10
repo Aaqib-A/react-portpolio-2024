@@ -291,7 +291,7 @@ export const Bio = {
       img: maha_logo,
       school: "Maharashtra State Board of Secondary and Higher Secondary Education",
       date: "May 2012",
-      grade: "80.26 %",
+      grade: "80.73 %",
       desc: "I completed my class 10 education at Children Welfare Center High School, Versova, where I completed by basic education.",
       degree: "(X) Board Exams",
     },
