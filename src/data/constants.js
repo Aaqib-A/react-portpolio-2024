@@ -10,10 +10,20 @@ import pvpp_logo from '../images/Icon/pvpp_logo.png';
 import sbmp_logo from '../images/Icon/sbmp_icon.jpeg';
 import maha_logo from '../images/Icon/maha_logo.jpeg';
 
+import redis_logo from '../images/Icon/redis_logo.png';
+import elasticsearch_logo from '../images/Icon/elasticsearch_logo.png';
+import rest_api_icon from '../images/Icon/rest_api_icon.png';
+import socket_io_icon from '../images/Icon/socket_io_icon.png';
+import cronjob_icon from '../images/Icon/cronjob_icon.png';
+import report_lab_icon from '../images/Icon/report_lab_icon.png';
 
 
 
-export const yoe = "3"
+
+
+
+
+export const yoe = "4"
 
 export const Bio = {
     name: "Aaqib Ansari",
@@ -21,7 +31,6 @@ export const Bio = {
       "Backend Developer",
       "Python Developer",
       "Web Developer",
-      "Node Js Developer"
     ],
     description:
       "Experienced Backend Developer with 8 years of academics in IT and 4+ years of hands-on industry experience. I strive to contribute to the organization's success and success of the project by providing the best solutions and achieving the highest performance.",
@@ -87,11 +96,11 @@ export const Bio = {
         },
         {
           name: "Redis",
-          image: ""
+          image: redis_logo
         },
         {
           name: "ElasticSearch",
-          image: ""
+          image: elasticsearch_logo
         },
       ]
     },
@@ -100,27 +109,27 @@ export const Bio = {
       skills: [
         {
           name: "RESTful Web Services",
-          image: ""
+          image: rest_api_icon
         },
         {
           name: "APIs",
-          image: "",
+          image: "https://img.icons8.com/ios/50/api-settings.png",
         },
         {
           name: "Socket.io",
-          image: ""
+          image: socket_io_icon
         },
         {
           name: "Cron Jobs",
-          image: ""
+          image: cronjob_icon
         },
         {
           name: "Selenium",
-          image: ""
+          image: "https://img.icons8.com/dusk/64/selenium-test-automation.png"
         },
         {
           name: "ReportLab",
-          image: ""
+          image: report_lab_icon
         },
       ]
 
@@ -141,7 +150,7 @@ export const Bio = {
         {
           name: "AWS",
           image:
-            "",
+            "https://img.icons8.com/color/48/amazon-web-services.png",
         },
         {
           name: "Netlify",
@@ -150,7 +159,7 @@ export const Bio = {
         },
         {
           name: "Linux OS",
-          image: ""
+          image: "https://img.icons8.com/external-those-icons-flat-those-icons/24/external-Linux-logos-and-brands-those-icons-flat-those-icons.png"
         },
         {
           name: "VS Code",
@@ -170,7 +179,7 @@ export const Bio = {
         {
           name: "Jira",
           image:
-            "",
+            "https://img.icons8.com/color/48/jira.png",
         },
       ],
     },
