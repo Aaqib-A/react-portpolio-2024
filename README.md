@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Aaqib Ansari · Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Personal portfolio of Aaqib Ansari, Senior Backend Engineer. It is a minimal, monochrome single page with:
 
-## Available Scripts
+- **An interactive terminal** in the hero. Type `help`, `whoami`, `projects`, `goto contact`, `github`, `theme light` or `sudo hire-aaqib`. It supports Tab completion and ↑/↓ history, and you can press `/` anywhere to focus it.
+- **Live GitHub data.** A Netlify Function (`/api/github`) feeds the project cards and the "Live from GitHub" strip. It is cached on Netlify's CDN for an hour and rate-limited per IP.
+- **A contact form** handled by Netlify Forms, plus a direct email link.
 
-In the project directory, you can run:
+## Stack
 
-### `npm start`
+Vite · React 19 · TypeScript · Tailwind CSS v4 · Netlify Functions · Vitest
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Editing content
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+All content lives in one file, [`src/data/portfolio.ts`](src/data/portfolio.ts). That includes the bio, skills, experience, projects, education, highlights and links. The page, the terminal commands and the generated `llms.txt` all read from it.
 
-### `npm test`
+## Local development
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+npm run dev        # http://localhost:5173; /api/github is emulated by @netlify/vite-plugin
+npm test           # unit tests (terminal commands, GitHub summary)
+npm run lint
+npm run build      # type-check + production build into dist/
+```
 
-### `npm run build`
+Without a token, GitHub allows 60 API requests per hour per IP. If the live data disappears locally, add `GITHUB_TOKEN=...` to a `.env` file (see below).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Deploying to Netlify
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. In Netlify, choose **Add new site → Import an existing project** and pick this repository. The build command, publish directory, Node version and functions directory all come from `netlify.toml`.
+2. Optional but recommended: add an environment variable **`GITHUB_TOKEN`**. Use a GitHub fine-grained personal access token with **no** permissions; public read access is enough. Netlify's servers share IP addresses, so the anonymous GitHub limit can run out.
+3. Under **Forms**, click **Enable form detection** and redeploy. Then go to **Forms → Form notifications → Add notification → Email notification** so contact messages reach your inbox.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After deploying, check that:
+- The deploy log lists the `github` function and its rate-limit rule.
+- The Forms tab shows a form named `contact`.
+- A second request to `/api/github` returns a `cache-status` header showing a Netlify cache hit.
 
-### `npm run eject`
+## Credits
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The design is adapted from Ali Farhan's [backend-portfolio](https://github.com/OliFarhaan/backend-portfolio) (MIT License, © 2026 Ali Farhan). The grid background, cross markers and shimmer styles in `src/index.css` come from it.
