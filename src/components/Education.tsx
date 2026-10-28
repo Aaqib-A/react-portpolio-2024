@@ -1,5 +1,5 @@
-import { education, highlights, sectionTitles } from '../data/portfolio'
-import { DashList, Section } from './Section'
+import { education, sectionTitles } from '../data/portfolio'
+import { Section } from './Section'
 
 export function Education() {
   return (
@@ -10,43 +10,19 @@ export function Education() {
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-4">
               <div>
                 <h3 className="text-black dark:text-white text-base font-semibold">{edu.degree}</h3>
+                {/* The degree-awarding body gets the emphasis; the college sits beneath it. */}
+                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-200 mt-2">{edu.institution}</p>
                 <p className="text-neutral-400 dark:text-neutral-500 text-xs mt-1">
-                  {edu.institution} &middot; {edu.location}
+                  {edu.college && <>{edu.college} &middot; </>}
+                  {edu.location}
                 </p>
               </div>
               <span className="text-neutral-400 dark:text-neutral-600 text-xs shrink-0">{edu.period}</span>
             </div>
             <p className="text-sm text-neutral-500 dark:text-neutral-400">{edu.grade}</p>
-            {edu.notes && (
-              <div className="mt-3">
-                <DashList items={edu.notes} />
-              </div>
-            )}
-            {edu.coursework && (
-              <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <h4 className="text-[11px] text-neutral-400 dark:text-neutral-500 uppercase tracking-[0.2em] mb-3">
-                  Coursework
-                </h4>
-                <div className="flex flex-wrap gap-x-4 gap-y-2">
-                  {edu.coursework.map((course) => (
-                    <span key={course} className="text-xs text-neutral-500 dark:text-neutral-400">
-                      {course}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         ))}
       </div>
-    </Section>
-  )
-}
-
-export function Highlights() {
-  return (
-    <Section id="highlights" title={sectionTitles.highlights}>
-      <DashList items={highlights} />
     </Section>
   )
 }

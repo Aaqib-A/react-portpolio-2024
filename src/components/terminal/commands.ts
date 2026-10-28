@@ -6,7 +6,6 @@ import {
   education,
   experience,
   fullName,
-  highlights,
   personal,
   projects,
   publications,
@@ -56,7 +55,6 @@ export const SECTIONS: SectionId[] = [
   'projects',
   'research',
   'education',
-  'highlights',
   'contact',
 ]
 
@@ -145,7 +143,11 @@ function printResearch(): OutputLine[] {
 }
 
 function printEducation(): OutputLine[] {
-  return education.flatMap((e) => [strong(e.degree), muted(`  ${e.institution} · ${e.period} · ${e.grade}`)])
+  return education.flatMap((e) => [
+    strong(e.degree),
+    ['  ', e.institution, muted(e.college ? ` · ${e.college}` : '')],
+    muted(`  ${e.period} · ${e.grade}`),
+  ])
 }
 
 function printContact(): OutputLine[] {
@@ -171,8 +173,6 @@ function printSection(section: SectionId): OutputLine[] {
       return printResearch()
     case 'education':
       return printEducation()
-    case 'highlights':
-      return highlights.map((h) => `— ${h}`)
     case 'contact':
       return printContact()
   }

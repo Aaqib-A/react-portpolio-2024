@@ -9,7 +9,6 @@ export type SectionId =
   | 'projects'
   | 'research'
   | 'education'
-  | 'highlights'
   | 'contact'
 
 export interface Link {
@@ -30,12 +29,13 @@ export interface Experience {
 
 export interface Education {
   degree: string
+  /** The degree-awarding body, shown with the most emphasis. */
   institution: string
+  /** Affiliated college, when the institution is a university. */
+  college?: string
   location: string
   period: string
   grade: string
-  notes?: string[]
-  coursework?: string[]
 }
 
 export interface Publication {
@@ -67,7 +67,7 @@ export const personal = {
   email: 'aaqib.ansari022@gmail.com',
   githubUser: 'Aaqib-A',
   resumeUrl: 'https://drive.google.com/file/d/1WK_HHL-oEFYW5sEQEzTmL_cHcaRg0VEU/view?usp=sharing',
-  bio: 'Backend engineer with 6+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
+  bio: 'Backend engineer with 8+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
   currentWork: {
     text: 'Currently a Software Engineer at',
     company: 'The Ninja Studio',
@@ -103,7 +103,6 @@ export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
   projects: 'Projects',
   research: 'Research Papers',
   education: 'Education',
-  highlights: 'Highlights',
   contact: 'Contact',
 }
 
@@ -297,22 +296,18 @@ export const education: Education[] = [
   {
     degree: 'Master of Engineering in Information Technology',
     institution: 'University of Mumbai',
-    location: 'Mumbai, India',
+    college: 'Vidyalankar Institute of Technology',
+    location: 'Wadala, Mumbai',
     period: 'Aug 2019 — Jan 2022',
     grade: 'CGPA: 9.18',
-    notes: [
-      'Research on natural-language code generation and generative adversarial networks, published in IJACSA and VIIRJ.',
-      'Worked alongside my studies for a year as a research intern at the Indian Institute of Geomagnetism.',
-    ],
   },
   {
     degree: 'Bachelor of Engineering in Information Technology',
     institution: 'University of Mumbai',
-    location: 'Mumbai, India',
+    college: "Padmabhushan Vasantdada Patil Pratishthan's College of Engineering",
+    location: 'Sion, Mumbai',
     period: 'Apr 2015 — Apr 2018',
     grade: 'CGPA: 7.4',
-    notes: ["Published 'A Space Shooter Game' in IJERCSE (2018)."],
-    coursework: ['Operating Systems', 'Computer Networks', 'Advanced DBMS', 'Web Technologies'],
   },
   {
     degree: 'Diploma in Information Technology',
@@ -320,17 +315,7 @@ export const education: Education[] = [
     location: 'Vile Parle, Mumbai',
     period: 'Jul 2012 — Jul 2015',
     grade: 'GPA: 7.35',
-    notes: ['Final project: a SQL query builder in Java and MySQL.'],
-    coursework: ['C', 'C++', 'Java', 'Data Structures & Algorithms', 'DBMS', 'Security'],
   },
-]
-
-export const highlights: string[] = [
-  'Published 3 research papers, including NLI-GSC (IJACSA, 2022) on generating source code from natural language.',
-  'Improved cron job efficiency by 85% at The Ninja Studio.',
-  'Maintain software for hardware deployed on every continent except Antarctica.',
-  'Trained and mentored 2 engineers at Getafix Technologies.',
-  'Built data-visualisation tooling for scientists at the Indian Institute of Geomagnetism.',
 ]
 
 export const contact = {

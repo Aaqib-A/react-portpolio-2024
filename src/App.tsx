@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Contact } from './components/Contact'
 import { CrossLine } from './components/CrossLine'
-import { Education, Highlights } from './components/Education'
+import { Education } from './components/Education'
 import { Experience } from './components/Experience'
 import { Footer } from './components/Footer'
 import { Hero } from './components/Hero'
@@ -36,7 +36,6 @@ export default function App() {
           <Projects />
           <Research />
           <Education />
-          <Highlights />
           <Contact />
         </div>
 

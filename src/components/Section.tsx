@@ -22,7 +22,7 @@ export function Section({ id, title, children }: SectionProps) {
   )
 }
 
-/** Em-dash bullet list used across experience, projects and highlights. */
+/** Em-dash bullet list used by experience and projects. */
 export function DashList({ items, small = false }: { items: string[]; small?: boolean }) {
   return (
     <ul className={small ? 'space-y-2' : 'space-y-2.5'}>
