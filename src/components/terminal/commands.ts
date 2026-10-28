@@ -90,6 +90,7 @@ const skillCategories = () => Object.keys(skills).map(slug)
 const openTargets = (): Record<string, string> => ({
   github: GITHUB_URL,
   linkedin: socials.find((s) => s.label === 'LinkedIn')?.url ?? GITHUB_URL,
+  orcid: socials.find((s) => s.label === 'ORCID')?.url ?? GITHUB_URL,
   resume: personal.resumeUrl,
   email: `mailto:${personal.email}`,
   ...Object.fromEntries(projects.map((p) => [p.repo.toLowerCase(), p.url])),
@@ -325,7 +326,7 @@ const commands: Command[] = [
   {
     name: 'open',
     usage: 'open <target>',
-    description: 'open github, linkedin, resume, email or a repo',
+    description: 'open github, linkedin, orcid, resume, email or a repo',
     args: () => Object.keys(openTargets()),
     run: ([target], ctx) => {
       const targets = openTargets()

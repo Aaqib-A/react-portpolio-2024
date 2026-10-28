@@ -2,10 +2,11 @@ import { useState, type MouseEvent } from 'react'
 import { fullName, navLinks, personal } from '../data/portfolio'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { scrollToSection } from '../lib/page'
-import { CrossLine } from './CrossLine'
+import { WRAP } from './Section'
 import { ThemeToggle } from './ThemeToggle'
 
 const sectionIds = navLinks.map((l) => l.id)
+const initials = `${personal.firstName[0]}${personal.lastName[0]}`
 
 function go(e: MouseEvent<HTMLAnchorElement>, id: string) {
   e.preventDefault()
@@ -21,65 +22,57 @@ export function Nav() {
       href={personal.resumeUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`text-xs text-white dark:text-black bg-black dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors duration-200 uppercase tracking-widest ${extra}`}
+      className={`rounded-md bg-brand text-sm font-medium text-white transition-colors hover:bg-brand-strong ${extra}`}
     >
       Resume
     </a>
   )
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-sm">
-      <div className="max-w-4xl mx-auto px-5 md:px-10 flex items-center justify-between h-14">
-        <a
-          href="#about"
-          onClick={(e) => go(e, 'about')}
-          className="text-black dark:text-white font-bold text-sm tracking-wider uppercase"
-        >
-          {fullName}
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas/85 backdrop-blur-md">
+      <div className={`${WRAP} flex h-16 items-center justify-between`}>
+        <a href="#about" onClick={(e) => go(e, 'about')} className="flex items-center gap-2.5 text-ink">
+          <span className="grid size-8 place-items-center rounded-md bg-brand text-[13px] font-bold tracking-tight text-white">
+            {initials}
+          </span>
+          <span className="text-[15px] font-medium">{fullName}</span>
         </a>
 
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden items-center gap-7 lg:flex">
           {navLinks.map((l) => (
             <a
               key={l.id}
               href={`#${l.id}`}
               onClick={(e) => go(e, l.id)}
               aria-current={active === l.id ? 'true' : undefined}
-              className={`text-xs uppercase tracking-widest transition-colors duration-200 ${
-                active === l.id
-                  ? 'text-black dark:text-white'
-                  : 'text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white'
+              className={`relative text-sm font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-[22px] after:h-0.5 after:bg-brand after:transition-opacity ${
+                active === l.id ? 'text-accent after:opacity-100' : 'text-soft after:opacity-0 hover:text-accent'
               }`}
             >
               {l.label}
             </a>
           ))}
           <ThemeToggle />
-          {resumeButton('px-4 py-1.5')}
+          {resumeButton('px-4 py-2')}
         </div>
 
-        <div className="flex lg:hidden items-center gap-1">
+        <div className="flex items-center gap-1 lg:hidden">
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setOpen(!open)}
-            className="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center text-sm font-medium text-soft hover:text-accent"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
-            {open ? 'close' : 'menu'}
+            {open ? 'Close' : 'Menu'}
           </button>
         </div>
       </div>
 
-      <div className="hidden lg:block max-w-4xl mx-auto">
-        <CrossLine />
-      </div>
-      <div className="lg:hidden h-px bg-neutral-200 dark:bg-neutral-800" />
-
       {open && (
-        <div className="lg:hidden border-b border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-sm">
-          <div className="px-5 py-4 flex flex-col gap-1">
+        <div className="border-t border-line bg-canvas lg:hidden">
+          <div className={`${WRAP} flex flex-col gap-1 py-4`}>
             {navLinks.map((l) => (
               <a
                 key={l.id}
@@ -88,12 +81,12 @@ export function Nav() {
                   setOpen(false)
                   go(e, l.id)
                 }}
-                className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-widest py-3"
+                className="py-3 text-[15px] font-medium text-soft transition-colors hover:text-accent"
               >
                 {l.label}
               </a>
             ))}
-            {resumeButton('px-4 py-3 w-fit mt-2')}
+            {resumeButton('mt-2 w-fit px-4 py-2.5')}
           </div>
         </div>
       )}

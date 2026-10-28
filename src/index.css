@@ -1,12 +1,58 @@
 @import 'tailwindcss';
 
-/* Grid, cross-marker and shimmer effects adapted from Ali Farhan's
-   backend-portfolio (MIT): https://github.com/OliFarhaan/backend-portfolio */
-
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Colours and type mirror the resume PDF: Roboto, ink on white, and its #492c89 purple.
+   Components use the semantic names below, so dark mode only has to swap the variables. */
+:root {
+  --canvas: #ffffff;
+  --surface: #ffffff;
+  --ink: #0f0d14;
+  --soft: #3b3845;
+  --muted: #6b6775;
+  --line: #e7e3ef;
+  --accent: #492c89;
+  --brand: #492c89;
+  --brand-strong: #3a2170;
+  --brand-soft: #f0ecf8;
+}
+
+html.dark {
+  --canvas: #0d0a14;
+  --surface: #14101e;
+  --ink: #f4f2f8;
+  --soft: #cbc6d6;
+  --muted: #958fa4;
+  --line: #272135;
+  --accent: #b9a5f0;
+  --brand: #4f3194;
+  --brand-strong: #5d3ca8;
+  --brand-soft: #211a35;
+}
+
 @theme {
+  --font-sans: 'Roboto', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Fira Code', ui-monospace, 'Cascadia Code', Menlo, Monaco, Consolas, monospace;
+
+  /* The terminal stays dark in both themes. */
+  --color-term: #161124;
+  --color-term-line: #2d2445;
+  --color-term-fg: #cfc8e0;
+  --color-term-muted: #8a82a3;
+  --color-term-accent: #b9a5f0;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
 }
 
 * {
@@ -18,103 +64,37 @@ html {
 }
 
 body {
-  background: #ffffff;
-  color: #1a1a1a;
-  font-family: var(--font-mono);
+  background: var(--canvas);
+  color: var(--soft);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: #000000;
+  background: #492c89;
   color: #ffffff;
-}
-
-html.dark body {
-  background: #010001;
-  color: #e5e5e5;
-}
-
-html.dark ::selection {
-  background: #ffffff;
-  color: #000000;
 }
 
 html.dark {
   color-scheme: dark;
-  scrollbar-color: #2a2a2a #010001;
+  scrollbar-color: #2d2445 #0d0a14;
 }
 
-/* Vercel-style "+" marker sitting on a horizontal rule */
-.cross-marker {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 50%;
-  transform: translate(-50%, -50%);
+/* The resume's hollow-ring bullets */
+.ring-list > li {
+  position: relative;
+  padding-left: 1.25rem;
 }
-.cross-marker::before,
-.cross-marker::after {
+.ring-list > li::before {
   content: '';
   position: absolute;
-  background: #d4d4d4;
-}
-.cross-marker::before {
-  width: 1px;
-  height: 100%;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-.cross-marker::after {
-  height: 1px;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-html.dark .cross-marker::before,
-html.dark .cross-marker::after {
-  background: #404040;
-}
-
-/* Faded grid behind the hero */
-.grid-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
-}
-html.dark .grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-.shimmer-text {
-  background: linear-gradient(90deg, #000 0%, #000 40%, #6b7280 50%, #000 60%, #000 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 8s linear infinite;
-}
-html.dark .shimmer-text {
-  background: linear-gradient(90deg, #fff 0%, #fff 40%, #6b7280 50%, #fff 60%, #fff 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
+  left: 0.125rem;
+  top: calc(0.5lh - 0.25rem);
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 9999px;
 }
 
 /* Reveal on scroll. Scoped to .js so content stays visible without JavaScript. */
@@ -130,7 +110,7 @@ html.dark .shimmer-text {
   transform: none;
 }
 
-/* Brief outline when the terminal (or a link) jumps to a section */
+/* Brief highlight when the terminal (or a link) jumps to a section */
 @keyframes flash {
   0%,
   100% {
@@ -141,11 +121,11 @@ html.dark .shimmer-text {
   }
 }
 .flash {
-  --flash: rgb(0 0 0 / 0.04);
+  --flash: rgb(73 44 137 / 0.06);
   animation: flash 1.4s ease;
 }
 html.dark .flash {
-  --flash: rgb(255 255 255 / 0.05);
+  --flash: rgb(185 165 240 / 0.06);
 }
 
 @keyframes blink {
@@ -161,9 +141,9 @@ html.dark .flash {
   html {
     scroll-behavior: auto;
   }
-  .shimmer-text,
   .caret,
-  .flash {
+  .flash,
+  .animate-ping {
     animation: none;
   }
   .js .reveal {

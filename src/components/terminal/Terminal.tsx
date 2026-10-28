@@ -12,12 +12,7 @@ const SUGGESTIONS = ['help', 'whoami', 'research', 'github', 'sudo hire-aaqib']
 
 function renderSegment(seg: Segment, key: number): ReactNode {
   if (typeof seg === 'string') return <span key={key}>{seg}</span>
-  const tone =
-    seg.tone === 'strong'
-      ? 'text-neutral-900 dark:text-neutral-100'
-      : seg.tone === 'muted'
-        ? 'text-neutral-400 dark:text-neutral-500'
-        : ''
+  const tone = seg.tone === 'strong' ? 'text-white' : seg.tone === 'muted' ? 'text-term-muted' : ''
   if (seg.href) {
     const external = seg.href.startsWith('http')
     return (
@@ -26,7 +21,7 @@ function renderSegment(seg: Segment, key: number): ReactNode {
         href={seg.href}
         target={external ? '_blank' : undefined}
         rel={external ? 'noopener noreferrer' : undefined}
-        className={`${tone} underline underline-offset-4 decoration-neutral-300 dark:decoration-neutral-700 hover:decoration-current`}
+        className={`${tone} underline underline-offset-4 decoration-term-accent/40 hover:decoration-current`}
       >
         {seg.text}
       </a>
@@ -42,8 +37,8 @@ function renderSegment(seg: Segment, key: number): ReactNode {
 function Prompt({ children }: { children: ReactNode }) {
   return (
     <div className="flex gap-2 items-start">
-      <span className="text-neutral-400 dark:text-neutral-500 shrink-0 select-none">$</span>
-      <span className="text-neutral-800 dark:text-neutral-200 break-all">{children}</span>
+      <span className="text-term-accent shrink-0 select-none">$</span>
+      <span className="text-white break-all">{children}</span>
     </div>
   )
 }
@@ -52,7 +47,7 @@ function Output({ lines, error }: { lines: OutputLine[]; error?: boolean }) {
   return (
     <div
       className={`ml-4 mt-1 mb-3 whitespace-pre-wrap break-words ${
-        error ? 'text-red-600 dark:text-red-400' : 'text-neutral-500 dark:text-neutral-400'
+        error ? 'text-rose-300' : 'text-term-fg'
       }`}
     >
       {lines.map((line, i) => (
@@ -183,18 +178,25 @@ export function Terminal() {
   }
 
   return (
-    <div className="border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
-      <div className="flex items-center justify-between gap-4 border-b border-neutral-200 dark:border-neutral-800 px-4 sm:px-5 md:px-6 py-2 text-[10px] uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
-        <span>~/aaqib · interactive shell</span>
+    <div className="overflow-hidden rounded-xl bg-term font-mono shadow-2xl shadow-brand/25 ring-1 ring-term-line">
+      <div className="flex items-center justify-between gap-4 bg-brand px-4 py-2.5 text-[11px] text-white/80 sm:px-5">
+        <span className="flex items-center gap-3">
+          <span className="flex gap-1.5" aria-hidden="true">
+            <span className="size-2.5 rounded-full bg-white/30" />
+            <span className="size-2.5 rounded-full bg-white/30" />
+            <span className="size-2.5 rounded-full bg-white/30" />
+          </span>
+          ~/aaqib · interactive shell
+        </span>
         <span className="hidden sm:inline">
-          press <kbd className="font-mono normal-case">/</kbd> to focus
+          press <kbd className="rounded border border-white/30 px-1">/</kbd> to focus
         </span>
       </div>
 
       <div
         ref={scrollRef}
         onClick={onClick}
-        className="p-4 sm:p-5 md:p-6 text-sm leading-[1.9] max-h-[28rem] overflow-y-auto cursor-text"
+        className="h-[25rem] cursor-text overflow-y-auto p-4 text-[13px] leading-[1.9] text-term-fg sm:p-5"
       >
         <div role="log" aria-live="polite" aria-label="Terminal output">
           {terminalIntro.map((t) => (
@@ -204,7 +206,7 @@ export function Terminal() {
             </div>
           ))}
 
-          <div className="ml-4 mb-3 text-neutral-400 dark:text-neutral-500">
+          <div className="ml-4 mb-3 text-term-muted">
             <span>type a command, or try: </span>
             <span className="inline-flex flex-wrap gap-x-2 gap-y-1 align-middle">
               {SUGGESTIONS.map((s) => (
@@ -213,7 +215,7 @@ export function Terminal() {
                   type="button"
                   onClick={() => void run(s)}
                   disabled={busy}
-                  className="border border-neutral-200 dark:border-neutral-800 px-2 leading-[1.7] text-xs text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors"
+                  className="rounded border border-term-line px-2 text-xs leading-[1.7] text-term-fg transition-colors hover:border-term-accent hover:text-white"
                 >
                   {s}
                 </button>
@@ -231,7 +233,7 @@ export function Terminal() {
         </div>
 
         <label className="flex gap-2 items-center">
-          <span className="text-neutral-400 dark:text-neutral-500 shrink-0 select-none">$</span>
+          <span className="text-term-accent shrink-0 select-none">$</span>
           <span className="sr-only">Terminal command</span>
           <input
             ref={inputRef}
@@ -247,7 +249,7 @@ export function Terminal() {
             autoCorrect="off"
             spellCheck={false}
             enterKeyHint="send"
-            className="flex-1 min-w-0 bg-transparent outline-none text-base sm:text-sm text-neutral-800 dark:text-neutral-200 placeholder:text-neutral-300 dark:placeholder:text-neutral-700 caret-neutral-800 dark:caret-neutral-200"
+            className="min-w-0 flex-1 bg-transparent text-base text-white caret-term-accent outline-none placeholder:text-term-muted/70 sm:text-[13px]"
           />
         </label>
       </div>

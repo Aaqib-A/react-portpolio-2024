@@ -1,73 +1,65 @@
 import type { MouseEvent } from 'react'
-import { personal, socials } from '../data/portfolio'
+import { fullName, personal } from '../data/portfolio'
 import { scrollToSection } from '../lib/page'
+import { WRAP } from './Section'
 import { Terminal } from './terminal/Terminal'
-
-export function SocialLinks() {
-  return (
-    <div className="flex flex-wrap gap-x-5 gap-y-3 md:gap-6">
-      {socials.map((s) => (
-        <a
-          key={s.label}
-          href={s.url}
-          target={s.url.startsWith('http') ? '_blank' : undefined}
-          rel="noopener noreferrer"
-          className="text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white transition-colors text-xs uppercase tracking-widest py-1"
-        >
-          {s.label}
-        </a>
-      ))}
-    </div>
-  )
-}
 
 function jump(e: MouseEvent<HTMLAnchorElement>, id: string) {
   e.preventDefault()
   scrollToSection(id)
 }
 
+// The bio stays a plain string (the terminal and llms.txt use it too); the hero bolds one phrase.
+const [lead, ...rest] = personal.bio.split(personal.bioHighlight)
+
 export function Hero() {
   return (
-    <section id="about" className="pt-2 sm:pt-8 md:pt-24 pb-8 relative">
-      <div className="grid-bg" />
-      <div className="relative z-10">
-        <p className="text-xs text-neutral-400 dark:text-neutral-500 uppercase tracking-[0.3em] mb-8">
-          {personal.title}
-        </p>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight shimmer-text">
-          {personal.firstName}
-          <br />
-          {personal.lastName}
-        </h1>
-        <p className="text-neutral-500 dark:text-neutral-400 mt-8 max-w-lg leading-[1.8] text-sm">
-          {personal.bio} {personal.currentWork.text}{' '}
-          <span className="text-black dark:text-white">{personal.currentWork.company}</span>.
-        </p>
+    <section id="about" className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
+      {/* Soft purple glow behind the terminal */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-48 -right-40 size-[44rem] rounded-full bg-brand/10 blur-3xl dark:bg-brand/25"
+      />
 
-        <div className="mt-8">
-          <SocialLinks />
+      <div className={`${WRAP} relative grid items-center gap-12 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:gap-14`}>
+        <div>
+          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-soft">
+            <span className="relative flex size-2" aria-hidden="true">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+            </span>
+            {personal.status}
+          </p>
+
+          <h1 className="mt-6 text-5xl tracking-tight text-ink sm:text-6xl">{fullName}</h1>
+          <p className="mt-3 text-2xl text-accent sm:text-[1.75rem]">{personal.title}</p>
+
+          <p className="mt-6 max-w-xl leading-relaxed text-soft md:text-[1.0625rem]">
+            {lead}
+            {rest.length > 0 && <strong className="font-bold text-ink">{personal.bioHighlight}</strong>}
+            {rest.join(personal.bioHighlight)} {personal.currentWork.text}{' '}
+            <span className="font-medium text-ink">{personal.currentWork.company}</span>.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#contact"
+              onClick={(e) => jump(e, 'contact')}
+              className="rounded-md bg-brand px-6 py-3 text-center text-[15px] font-medium text-white shadow-lg shadow-brand/25 transition-colors hover:bg-brand-strong"
+            >
+              Contact me
+            </a>
+            <a
+              href="#experience"
+              onClick={(e) => jump(e, 'experience')}
+              className="rounded-md border border-line bg-surface px-6 py-3 text-center text-[15px] font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+            >
+              My work
+            </a>
+          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 text-xs">
-          <a
-            href="#contact"
-            onClick={(e) => jump(e, 'contact')}
-            className="text-white dark:text-black bg-black dark:bg-white px-5 py-3 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors uppercase tracking-widest text-center"
-          >
-            Contact
-          </a>
-          <a
-            href="#experience"
-            onClick={(e) => jump(e, 'experience')}
-            className="text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-800 px-5 py-3 hover:text-black dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors uppercase tracking-widest text-center"
-          >
-            My Work
-          </a>
-        </div>
-
-        <div className="mt-14">
-          <Terminal />
-        </div>
+        <Terminal />
       </div>
     </section>
   )

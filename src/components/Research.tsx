@@ -1,26 +1,28 @@
 import { publications, sectionTitles } from '../data/portfolio'
-import { Section } from './Section'
+import { ArrowIcon } from './icons'
+import { MetaRow, Section, Tick, Timeline } from './Section'
 
 const linkClass =
-  'text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors underline underline-offset-4 decoration-neutral-300 dark:decoration-neutral-700'
+  'inline-flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-sm font-medium text-accent transition-colors hover:border-accent hover:bg-brand-soft'
 
 export function Research() {
   return (
     <Section id="research" title={sectionTitles.research}>
-      <div className="divide-y divide-neutral-200 dark:divide-neutral-800">
+      <Timeline>
         {publications.map((paper) => (
-          <article key={paper.title} className="py-7 first:pt-0 last:pb-0">
-            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-6">
-              <h3 className="text-black dark:text-white text-base font-semibold leading-snug">{paper.title}</h3>
-              <span className="text-neutral-400 dark:text-neutral-600 text-xs shrink-0">{paper.date}</span>
-            </div>
-            <p className="text-neutral-400 dark:text-neutral-500 text-xs mt-2 leading-[1.7]">
+          <article key={paper.title}>
+            <h3 className="relative text-lg font-bold leading-snug text-ink">
+              <Tick />
+              {paper.title}
+            </h3>
+            <MetaRow left={paper.date} />
+            <p className="mt-1.5 text-sm italic leading-relaxed text-muted">
               {paper.venue}
               {paper.publisher && <> &middot; {paper.publisher}</>}
             </p>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-xs">
+            <div className="mt-4 flex flex-wrap gap-2">
               <a href={paper.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Read paper ↗
+                Read paper <ArrowIcon className="size-3.5" />
               </a>
               {paper.doi && (
                 <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener noreferrer" className={linkClass}>
@@ -29,13 +31,13 @@ export function Research() {
               )}
               {paper.codeUrl && (
                 <a href={paper.codeUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                  Source code ↗
+                  Source code <ArrowIcon className="size-3.5" />
                 </a>
               )}
             </div>
           </article>
         ))}
-      </div>
+      </Timeline>
     </Section>
   )
 }

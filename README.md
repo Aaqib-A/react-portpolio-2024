@@ -1,6 +1,6 @@
 # Aaqib Ansari · Portfolio
 
-Personal portfolio of Aaqib Ansari, Senior Backend Engineer. It is a minimal, monochrome single page with:
+Personal portfolio of Aaqib Ansari, Senior Backend Engineer. The design extends the resume (Roboto, the resume's `#492c89` purple, its contact band, section headings, ticks and skill pills) into a single page with:
 
 - **An interactive terminal** in the hero. Type `help`, `whoami`, `projects`, `goto contact`, `github`, `theme light` or `sudo hire-aaqib`. It supports Tab completion and ↑/↓ history, and you can press `/` anywhere to focus it.
 - **Live GitHub data.** A Netlify Function (`/api/github`) feeds the project cards and the "Live from GitHub" strip. It is cached on Netlify's CDN for an hour and rate-limited per IP.
@@ -37,6 +37,6 @@ After deploying, check that:
 - The Forms tab shows a form named `contact`.
 - A second request to `/api/github` returns a `cache-status` header showing a Netlify cache hit.
 
-## Credits
+## Design tokens
 
-The design is adapted from Ali Farhan's [backend-portfolio](https://github.com/OliFarhaan/backend-portfolio) (MIT License, © 2026 Ali Farhan). The grid background, cross markers and shimmer styles in `src/index.css` come from it.
+Colours live as CSS variables at the top of [`src/index.css`](src/index.css) (`--accent`, `--brand`, `--ink`, …) with a dark-mode set under `html.dark`. Components only use the semantic Tailwind names (`text-accent`, `bg-brand`, `border-line`, …), so a palette change is a one-file edit.

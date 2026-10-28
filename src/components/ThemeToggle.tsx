@@ -10,7 +10,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
-      className="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors min-h-[44px] min-w-[44px] lg:min-h-0 lg:min-w-0 flex items-center justify-center"
+      className="flex min-h-[44px] min-w-[44px] items-center justify-center text-soft transition-colors hover:text-accent lg:min-h-0 lg:min-w-0"
     >
       {theme === 'dark' ? (
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

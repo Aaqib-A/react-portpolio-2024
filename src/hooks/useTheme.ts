@@ -12,6 +12,7 @@ export function getTheme(): Theme {
 
 export function setTheme(theme: Theme) {
   document.documentElement.classList.toggle('dark', theme === 'dark')
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0d0a14' : '#ffffff')
   try {
     localStorage.setItem('theme', theme)
   } catch {

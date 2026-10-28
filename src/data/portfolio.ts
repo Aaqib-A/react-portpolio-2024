@@ -67,7 +67,10 @@ export const personal = {
   email: 'aaqib.ansari022@gmail.com',
   githubUser: 'Aaqib-A',
   resumeUrl: 'https://drive.google.com/file/d/1WK_HHL-oEFYW5sEQEzTmL_cHcaRg0VEU/view?usp=sharing',
-  bio: 'Backend engineer with 8+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
+  status: 'Open to Software Engineering roles & freelance work',
+  /** Part of the bio that the hero sets in bold. */
+  bioHighlight: '8+ years',
+  bio: 'Software engineer with 8+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS and also design and create distributed systems capable of handling 1000s of requests per second. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
   currentWork: {
     text: 'Currently a Software Engineer at',
     company: 'The Ninja Studio',
@@ -79,11 +82,12 @@ export const fullName = `${personal.firstName} ${personal.lastName}`
 export const socials: Link[] = [
   { label: 'GitHub', url: 'https://github.com/Aaqib-A' },
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/aaqib-ansari-8021118a/' },
+  { label: 'ORCID', url: 'https://orcid.org/0000-0002-2018-5132' },
   { label: 'Email', url: `mailto:${personal.email}` },
 ]
 
 export const terminalIntro: { prompt: string; output: string }[] = [
-  { prompt: 'echo $STATUS', output: 'Open to backend roles & freelance work' },
+  { prompt: 'echo $STATUS', output: personal.status },
   { prompt: 'echo $LOCATION', output: personal.location },
   { prompt: 'echo $STACK', output: 'Python · Django · Node.js · PostgreSQL · Redis · Docker · Kubernetes · AWS' },
 ]
@@ -99,7 +103,7 @@ export const navLinks: { id: SectionId; label: string }[] = [
 
 export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
   skills: 'Skills',
-  experience: 'Experience',
+  experience: 'Work Experience',
   projects: 'Projects',
   research: 'Research Papers',
   education: 'Education',
@@ -107,11 +111,12 @@ export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
 }
 
 export const skills: Record<string, string[]> = {
-  Languages: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'C#'],
+  Languages: ['Python', 'TypeScript', 'JavaScript', 'Haskell', 'SQL', 'C#'],
   Backend: ['Django', 'Django REST Framework', 'Django Channels', 'Jinja', 'Celery', 'Node.js', 'Express', 'Flask', 'Strapi'],
+  Frontend: ['React'],
   'Data Stores': ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
-  'APIs & Realtime': ['REST', 'GraphQL', 'WebSockets', 'Socket.io', 'OAuth2', 'Cron Jobs'],
-  'DevOps & Cloud': ['Docker', 'Docker Compose', 'Kubernetes', 'AWS', 'Netlify', 'nginx', 'Gunicorn', 'Linux', 'Git'],
+  'APIs & Realtime': ['REST', 'GraphQL', 'WebSockets', 'Socket.io', 'OAuth2', 'Auth0', 'Clerk', 'Cron Jobs'],
+  'DevOps & Cloud': ['Docker', 'Docker Compose', 'Kubernetes', 'Nix', 'Nix Flakes', 'AWS', 'Netlify', 'nginx', 'Gunicorn', 'Linux', 'Git'],
   'AI / ML & Data': ['LLM Prototyping', 'NL-to-SQL', 'Whisper', 'spaCy', 'NLP', 'Pandas', 'NumPy', 'Matplotlib', 'Selenium', 'ReportLab'],
   Tools: ['VS Code', 'Postman', 'Figma', 'Jira'],
 }
@@ -134,12 +139,15 @@ export const experience: Experience[] = [
       'Act as the DevOps engineer on Kubernetes and AWS, resolving production system failures.',
       'Maintain and improve software for hardware deployed on every continent except Antarctica.',
     ],
-    tech: ['Python', 'Kubernetes', 'AWS', 'LLMs', 'NL-to-SQL', 'SQL', 'Cron Jobs', 'Linux'],
+    tech: [
+      'Python', 'Haskell', 'TypeScript', 'React', 'PostgreSQL', 'Redis', 'SQL', 'Kubernetes', 'Nix',
+      'Nix Flakes', 'AWS', 'Auth0', 'Clerk', 'LLMs', 'NL-to-SQL', 'Cron Jobs', 'Linux',
+    ],
   },
   {
     role: 'Python Developer',
     company: 'Rentokil PCI',
-    location: 'Mumbai, Maharashtra · Hybrid',
+    location: 'Mumbai, Maharashtra, India · Hybrid',
     period: 'Jul 2024 — Oct 2024',
     points: [
       'Built and maintained the internal systems used across the company.',
@@ -152,6 +160,7 @@ export const experience: Experience[] = [
   {
     role: 'Senior Backend Developer',
     company: 'Getafix Technologies',
+    location: 'Bangalore, Karnataka, India · Hybrid',
     period: 'Apr 2022 — Jun 2024',
     points: [
       'Build and maintain web applications with Python, Django, PostgreSQL and Docker.',
@@ -170,7 +179,7 @@ export const experience: Experience[] = [
     role: 'Research Intern',
     tag: 'Research',
     company: 'Indian Institute of Geomagnetism',
-    location: 'Navi Mumbai, India',
+    location: 'Navi Mumbai, Maharashtra, India',
     period: 'Feb 2021 — Mar 2022',
     points: [
       "Worked directly with scientists to understand their research goals and track the project's progress.",
@@ -183,7 +192,7 @@ export const experience: Experience[] = [
   {
     role: 'Associate Analyst',
     company: 'Ugam Solutions',
-    location: 'Mumbai, India',
+    location: 'Mumbai, Maharashtra, India',
     period: 'Jul 2018 — Jun 2019',
     points: [
       'Built online surveys with Python, CSS, jQuery, XML and C# on the Decipher and ConfirmIt platforms.',
@@ -219,16 +228,17 @@ export const projects: Project[] = [
     url: 'https://github.com/Aaqib-A/subtitle-generator',
   },
   {
-    name: 'NLI-GSC: Natural Language → Code',
-    repo: 'Creating-PseudoCode-using-NLP',
-    tagline: 'Generating Python programs from plain-English pseudocode. Published in IJACSA (2022)',
+    name: 'Elasticsearch Book Search',
+    repo: 'django-elasticsearch',
+    tagline: 'Fast full-text search for a Django app, backed by Elasticsearch',
     points: [
-      'Custom spaCy NER model trained on synthetic statements from a Markov-chain data generator.',
-      'Maps tagged entities to an XML intermediate representation, then compiles that XML into runnable Python.',
-      'Tkinter desktop UI to type a statement and see the generated program.',
+      'Book model indexed into Elasticsearch with django-elasticsearch-dsl; one management command rebuilds the index.',
+      'Django REST Framework search endpoint that runs match queries and returns serialized results; a Postman collection is included.',
+      'Search page with typo-tolerant (fuzzy) multi-field matching.',
+      'Single-node Elasticsearch 8 runs in Docker Compose; a seed script loads 100 classic books.',
     ],
-    tech: ['Python', 'spaCy', 'NLP', 'Jupyter', 'XML', 'Tkinter'],
-    url: 'https://github.com/Aaqib-A/Creating-PseudoCode-using-NLP',
+    tech: ['Python', 'Django', 'DRF', 'Elasticsearch', 'Docker'],
+    url: 'https://github.com/Aaqib-A/django-elasticsearch',
   },
   {
     name: 'Realtime Chat',
@@ -311,7 +321,8 @@ export const education: Education[] = [
   },
   {
     degree: 'Diploma in Information Technology',
-    institution: 'Shri Bhagubhai Mafatlal Polytechnic',
+    institution: 'Autonomous institute affiliated with the Maharashtra State Board of Technical Education (MSBTE)',
+    college: 'Shri Bhagubhai Mafatlal Polytechnic',
     location: 'Vile Parle, Mumbai',
     period: 'Jul 2012 — Jul 2015',
     grade: 'GPA: 7.35',
@@ -320,10 +331,5 @@ export const education: Education[] = [
 
 export const contact = {
   message:
-    "I'm open to backend roles, freelance projects and interesting collaborations. Drop a message below or email me directly.",
-}
-
-export const footerCredit = {
-  text: 'Design inspired by Ali Farhan',
-  url: 'https://github.com/OliFarhaan/backend-portfolio',
+    "I'm open to Software Engineering roles, freelance projects and interesting collaborations. Drop a message below or email me directly.",
 }

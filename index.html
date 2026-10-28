@@ -9,8 +9,7 @@
       content="Aaqib Ansari, Senior Backend Engineer in Mumbai. Python, Django, Node.js, PostgreSQL, Redis, Elasticsearch, Docker, Kubernetes and AWS, plus AI prototypes. 8+ years across industry and research."
     />
     <meta name="author" content="Aaqib Ansari" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#010001" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="__SITE_URL__/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
@@ -30,7 +29,7 @@
       content="Backend engineer building Python/Django and Node.js services: REST and real-time APIs, PostgreSQL, Redis, Elasticsearch, Docker, Kubernetes and AWS."
     />
 
-    <!-- Apply the saved (or system) theme before first paint to avoid a flash. -->
+    <!-- Light by default; apply a saved dark choice before first paint to avoid a flash. -->
     <script>
       ;(function () {
         var root = document.documentElement
@@ -39,8 +38,9 @@
         try {
           theme = localStorage.getItem('theme')
         } catch (e) {}
-        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (theme === 'dark') {
           root.classList.add('dark')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0a14')
         }
       })()
     </script>
@@ -61,7 +61,7 @@
           { "@type": "CollegeOrUniversity", "name": "Padmabhushan Vasantdada Patil Pratishthan's College of Engineering" }
         ],
         "knowsAbout": ["Python", "Django", "Node.js", "PostgreSQL", "Redis", "Elasticsearch", "Docker", "Kubernetes", "AWS", "REST APIs", "WebSockets", "NLP", "LLM applications"],
-        "sameAs": ["https://github.com/Aaqib-A", "https://www.linkedin.com/in/aaqib-ansari-8021118a/"]
+        "sameAs": ["https://github.com/Aaqib-A", "https://www.linkedin.com/in/aaqib-ansari-8021118a/", "https://orcid.org/0000-0002-2018-5132"]
       }
     </script>
   </head>
@@ -77,7 +77,7 @@
     </form>
 
     <noscript>
-      <p style="font-family: monospace; padding: 2rem">
+      <p style="font-family: Roboto, system-ui, sans-serif; padding: 2rem">
         Aaqib Ansari, Senior Backend Engineer. Email
         <a href="mailto:aaqib.ansari022@gmail.com">aaqib.ansari022@gmail.com</a> or see
         <a href="https://github.com/Aaqib-A">github.com/Aaqib-A</a>.

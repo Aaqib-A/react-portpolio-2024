@@ -1,24 +1,30 @@
-import { footerCredit, fullName } from '../data/portfolio'
+import type { MouseEvent } from 'react'
+import { fullName } from '../data/portfolio'
+import { scrollToSection } from '../lib/page'
+import { WRAP } from './Section'
 
-const text = 'text-neutral-400 dark:text-neutral-600 text-[11px] tracking-widest uppercase'
+function toTop(e: MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault()
+  scrollToSection('about')
+}
 
+/** Closes the page with the same purple band that opens the resume. */
 export function Footer() {
   return (
-    <footer className="max-w-4xl mx-auto px-5 text-center py-8 space-y-2">
-      <p className={text}>
-        Built by {fullName} &copy; {new Date().getFullYear()}
-      </p>
-      <p className={text}>
-        <a
-          href={footerCredit.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"
-        >
-          {footerCredit.text}
+    <footer className="bg-brand text-white">
+      <div className={`${WRAP} flex flex-col gap-3 py-8 text-sm sm:flex-row sm:items-center sm:justify-between`}>
+        <p>
+          &copy; {new Date().getFullYear()} {fullName}
+        </p>
+        <p className="hidden text-white/70 md:block">
+          Press{' '}
+          <kbd className="rounded border border-white/30 px-1.5 py-px font-mono text-xs text-white">/</kbd> to
+          open the terminal
+        </p>
+        <a href="#about" onClick={toTop} className="text-white/80 underline-offset-4 hover:text-white hover:underline">
+          Back to top ↑
         </a>
-        <span className="hidden sm:inline"> · Press / to open the terminal</span>
-      </p>
+      </div>
     </footer>
   )
 }
