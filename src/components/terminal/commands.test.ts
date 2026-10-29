@@ -96,6 +96,14 @@ describe('execute', () => {
     expect(text(await execute('cat research', makeCtx()))).toContain('A Space Shooter Game')
   })
 
+  it('lists certifications, also via the certs alias', async () => {
+    const out = text(await execute('certs', makeCtx()))
+    expect(out).toContain('MATLAB Onramp')
+    expect(out).toContain('MathWorks · Apr 2021')
+    expect(text(await execute('ls', makeCtx()))).toContain('certifications/')
+    expect(text(await execute('cat certifications', makeCtx()))).toContain('TensorFlow in Practice')
+  })
+
   it('switches theme, including toggle', async () => {
     const ctx = makeCtx()
     await execute('theme light', ctx)

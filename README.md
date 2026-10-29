@@ -12,7 +12,7 @@ Vite · React 19 · TypeScript · Tailwind CSS v4 · Netlify Functions · Vitest
 
 ## Editing content
 
-All content lives in one file, [`src/data/portfolio.ts`](src/data/portfolio.ts). That includes the bio, skills, experience, projects, research papers, education and links. The page, the terminal commands and the generated `llms.txt` all read from it.
+All content lives in one file, [`src/data/portfolio.ts`](src/data/portfolio.ts). That includes the bio, skills, experience, projects, research papers, education, certifications and links. The page, the terminal commands and the generated `llms.txt` all read from it.
 
 ## Local development
 

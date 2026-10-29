@@ -9,6 +9,7 @@ export type SectionId =
   | 'projects'
   | 'research'
   | 'education'
+  | 'certifications'
   | 'contact'
 
 export interface Link {
@@ -47,6 +48,15 @@ export interface Publication {
   doi?: string
   /** Code that accompanies the paper. */
   codeUrl?: string
+}
+
+export interface Certification {
+  name: string
+  issuer: string
+  date: string
+  credentialId?: string
+  /** Public page that verifies the credential. */
+  url: string
 }
 
 export interface Project {
@@ -98,6 +108,7 @@ export const navLinks: { id: SectionId; label: string }[] = [
   { id: 'projects', label: 'Projects' },
   { id: 'research', label: 'Research' },
   { id: 'education', label: 'Education' },
+  { id: 'certifications', label: 'Certifications' },
   { id: 'contact', label: 'Contact' },
 ]
 
@@ -107,6 +118,7 @@ export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
   projects: 'Projects',
   research: 'Research Papers',
   education: 'Education',
+  certifications: 'Certifications',
   contact: 'Contact',
 }
 
@@ -326,6 +338,85 @@ export const education: Education[] = [
     location: 'Vile Parle, Mumbai',
     period: 'Jul 2012 — Jul 2015',
     grade: 'GPA: 7.35',
+  },
+]
+
+export const certifications: Certification[] = [
+  {
+    name: 'Kubernetes Certified Application Developer (CKAD)',
+    issuer: 'Udemy',
+    date: 'Aug 2026',
+    credentialId: 'UC-af9b43f7-cc27-42e8-8c21-861be12ef832',
+    url: 'https://www.udemy.com/certificate/UC-af9b43f7-cc27-42e8-8c21-861be12ef832/',
+  },
+  {
+    name: 'MongoDB: A Complete Database Administration Course',
+    issuer: 'Udemy',
+    date: 'Mar 2024',
+    credentialId: 'UC-9f08b1cb-42d4-4caf-b5ae-2fbbb63e833e',
+    url: 'https://www.udemy.com/certificate/UC-9f08b1cb-42d4-4caf-b5ae-2fbbb63e833e/',
+  },
+  {
+    name: 'MATLAB Onramp',
+    issuer: 'MathWorks',
+    date: 'Apr 2021',
+    url: 'https://matlabacademy.mathworks.com/progress/share/certificate.html?id=f3800828-c2f1-40db-9268-60b0eba837ef',
+  },
+  {
+    name: 'Natural Language Processing with Classification and Vector Spaces',
+    issuer: 'Coursera',
+    date: 'Aug 2020',
+    credentialId: 'BPGWGAD77NCF',
+    url: 'https://www.coursera.org/account/accomplishments/verify/BPGWGAD77NCF',
+  },
+  {
+    name: 'Introduction to Artificial Intelligence (AI)',
+    issuer: 'Coursera',
+    date: 'Jul 2020',
+    credentialId: '4BW2AM27B9ZC',
+    url: 'https://www.coursera.org/account/accomplishments/verify/4BW2AM27B9ZC',
+  },
+  {
+    name: 'TensorFlow in Practice',
+    issuer: 'Coursera',
+    date: 'Jul 2020',
+    credentialId: '8R4DZQSD4ABW',
+    url: 'https://www.coursera.org/account/accomplishments/professional-cert/8R4DZQSD4ABW',
+  },
+  {
+    name: 'AI For Everyone',
+    issuer: 'Coursera',
+    date: 'Jun 2020',
+    credentialId: 'WTXDYLVYRJEG',
+    url: 'https://www.coursera.org/account/accomplishments/verify/WTXDYLVYRJEG',
+  },
+  {
+    name: 'Using Python to Interact with the Operating System',
+    issuer: 'Coursera',
+    date: 'Jun 2020',
+    credentialId: '6ZST8RXHJGP4',
+    url: 'https://www.coursera.org/account/accomplishments/verify/6ZST8RXHJGP4',
+  },
+  {
+    name: 'Crash Course on Python',
+    issuer: 'Coursera',
+    date: 'May 2020',
+    credentialId: 'SJBTYYJVZHPR',
+    url: 'https://www.coursera.org/account/accomplishments/verify/SJBTYYJVZHPR',
+  },
+  {
+    name: 'Introduction to Psychology',
+    issuer: 'Coursera',
+    date: 'Apr 2020',
+    credentialId: 'J5NA8U3J2JFG',
+    url: 'https://www.coursera.org/account/accomplishments/verify/J5NA8U3J2JFG',
+  },
+  {
+    name: 'R-Programming A-Z: R For Data Science With Real Exercises',
+    issuer: 'Udemy',
+    date: 'Dec 2019',
+    credentialId: 'UC-3SI26TJJ',
+    url: 'https://www.udemy.com/certificate/UC-3SI26TJJ/',
   },
 ]
 

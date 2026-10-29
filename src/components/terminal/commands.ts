@@ -3,6 +3,7 @@
 // which keeps every command unit-testable.
 
 import {
+  certifications,
   education,
   experience,
   fullName,
@@ -55,6 +56,7 @@ export const SECTIONS: SectionId[] = [
   'projects',
   'research',
   'education',
+  'certifications',
   'contact',
 ]
 
@@ -151,6 +153,13 @@ function printEducation(): OutputLine[] {
   ])
 }
 
+function printCertifications(): OutputLine[] {
+  return certifications.flatMap((c): OutputLine[] => [
+    [{ text: c.name, href: c.url, tone: 'strong' }],
+    muted(`  ${c.issuer} · ${c.date}`),
+  ])
+}
+
 function printContact(): OutputLine[] {
   return [
     ['email     ', { text: personal.email, href: `mailto:${personal.email}` }],
@@ -174,6 +183,8 @@ function printSection(section: SectionId): OutputLine[] {
       return printResearch()
     case 'education':
       return printEducation()
+    case 'certifications':
+      return printCertifications()
     case 'contact':
       return printContact()
   }
@@ -267,6 +278,12 @@ const commands: Command[] = [
     name: 'education',
     description: 'degrees and grades',
     run: () => ok(...printEducation()),
+  },
+  {
+    name: 'certifications',
+    aliases: ['certs'],
+    description: 'courses and certificates (alias: certs)',
+    run: () => ok(...printCertifications()),
   },
   {
     name: 'github',

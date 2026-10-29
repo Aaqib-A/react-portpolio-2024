@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 import {
+  certifications,
   education,
   experience,
   fullName,
@@ -45,6 +46,11 @@ function llmsTxt(): string {
     '## Education',
     ...education.map(
       (e) => `- ${e.degree}, ${e.institution}${e.college ? ` (${e.college})` : ''}, ${e.period}, ${e.grade}`,
+    ),
+    '',
+    '## Certifications',
+    ...certifications.map(
+      (c) => `- [${c.name}](${c.url}), ${c.issuer} (${c.date})${c.credentialId ? `, credential ID ${c.credentialId}` : ''}`,
     ),
     '',
     '## Contact',

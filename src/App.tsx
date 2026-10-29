@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Certifications } from './components/Certifications'
 import { Contact } from './components/Contact'
 import { ContactBand } from './components/ContactBand'
 import { Education } from './components/Education'
@@ -31,6 +32,7 @@ export default function App() {
         <Projects />
         <Research />
         <Education />
+        <Certifications />
         <Contact />
       </main>
       <Footer />
