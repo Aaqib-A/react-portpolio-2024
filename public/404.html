@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>404 | Aaqib Ansari</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #0f0d14;
+        --brand: #492c89;
+      }
+      :root.dark {
+        --bg: #0d0a14;
+        --fg: #f4f2f8;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        padding: 0 16px;
+      }
+      main {
+        max-width: 32rem;
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgb(73 44 137 / 0.3);
+      }
+      header {
+        background: var(--brand);
+        color: rgb(255 255 255 / 0.8);
+        padding: 10px 20px;
+        font: 11px ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+      }
+      .shell {
+        background: #161124;
+        color: #cfc8e0;
+        padding: 20px;
+        font: 13px/1.9 ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+      }
+      .prompt {
+        color: #b9a5f0;
+      }
+      .muted {
+        color: #8a82a3;
+        margin-left: 1rem;
+      }
+      a {
+        color: #ffffff;
+        text-underline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>~/aaqib · interactive shell</header>
+      <div class="shell">
+        <div><span class="prompt">$</span> cd <span id="path">this-page</span></div>
+        <div class="muted">cd: no such file or directory (404)</div>
+        <div><span class="prompt">$</span> <a href="/">cd ~</a></div>
+      </div>
+    </main>
+    <script>
+      document.getElementById('path').textContent = location.pathname
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark')
+      } catch (e) {}
+    </script>
+  </body>
+</html>
