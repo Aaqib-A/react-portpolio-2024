@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Achievements Timeline | Aaqib Ansari</title>
+    <meta
+      name="description"
+      content="A timeline of Aaqib Ansari's achievements: roles, degrees, research papers and certifications, from the latest back to the first."
+    />
+    <meta name="author" content="Aaqib Ansari" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href="__SITE_URL__/timeline" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="__SITE_URL__/timeline" />
+    <meta property="og:title" content="Achievements Timeline | Aaqib Ansari" />
+    <meta
+      property="og:description"
+      content="Roles, degrees, research papers and certifications on one timeline."
+    />
+    <meta property="og:site_name" content="Aaqib Ansari" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Achievements Timeline | Aaqib Ansari" />
+    <meta
+      name="twitter:description"
+      content="Roles, degrees, research papers and certifications on one timeline."
+    />
+
+    <!-- Same as index.html: light by default; apply a saved dark choice before first paint to avoid a flash. -->
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        root.classList.add('js')
+        var theme = null
+        try {
+          theme = localStorage.getItem('theme')
+        } catch (e) {}
+        if (theme === 'dark') {
+          root.classList.add('dark')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0a14')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <noscript>
+      <p style="font-family: Roboto, system-ui, sans-serif; padding: 2rem">
+        Aaqib Ansari's achievements timeline needs JavaScript. Email
+        <a href="mailto:aaqib.ansari022@gmail.com">aaqib.ansari022@gmail.com</a> or see
+        <a href="https://github.com/Aaqib-A">github.com/Aaqib-A</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/timeline.tsx"></script>
+  </body>
+</html>

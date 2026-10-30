@@ -16,6 +16,14 @@ import {
   type SectionId,
 } from '../../data/portfolio'
 import { timeAgo, type GithubSummary } from '../../lib/github'
+import {
+  buildTimeline,
+  groupByYear,
+  monthName,
+  TIMELINE_PATH,
+  timelineCategories,
+  type TimelineCategory,
+} from '../../lib/timeline'
 
 export type Segment = string | { text: string; href?: string; tone?: 'strong' | 'muted' }
 export type OutputLine = Segment | Segment[]
@@ -88,6 +96,9 @@ export const slug = (s: string) =>
     .replace(/^-|-$/g, '')
 
 const skillCategories = () => Object.keys(skills).map(slug)
+const timelineIds = () => Object.keys(timelineCategories) as TimelineCategory[]
+// The aliases of the `research` and `certifications` commands work as categories too.
+const TIMELINE_ALIASES: Record<string, TimelineCategory> = { papers: 'research', certs: 'certifications' }
 
 const openTargets = (): Record<string, string> => ({
   github: GITHUB_URL,
@@ -95,6 +106,7 @@ const openTargets = (): Record<string, string> => ({
   orcid: socials.find((s) => s.label === 'ORCID')?.url ?? GITHUB_URL,
   resume: personal.resumeUrl,
   email: `mailto:${personal.email}`,
+  timeline: TIMELINE_PATH,
   ...Object.fromEntries(projects.map((p) => [p.repo.toLowerCase(), p.url])),
 })
 
@@ -158,6 +170,31 @@ function printCertifications(): OutputLine[] {
     [{ text: c.name, href: c.url, tone: 'strong' }],
     muted(`  ${c.issuer} · ${c.date}`),
   ])
+}
+
+function printTimeline(now: Date, category?: string): CommandResult {
+  let entries = buildTimeline(now)
+  if (category) {
+    const key = category.toLowerCase()
+    const match = TIMELINE_ALIASES[key] ?? timelineIds().find((id) => id.startsWith(key))
+    if (!match) {
+      return fail(`timeline: unknown category '${category}'`, muted(`categories: ${timelineIds().join(', ')}`))
+    }
+    entries = entries.filter((e) => e.category === match)
+  }
+  return ok(
+    ...groupByYear(entries).flatMap(({ year, entries: items }): OutputLine[] => [
+      strong(String(year)),
+      // Roles and degrees sit where they ended, so they also show when they began.
+      ...items.map((e): OutputLine => [
+        `  ${e.ongoing ? 'now' : monthName(e.month)}  `,
+        e.title,
+        muted(` · ${e.subtitle}${e.start === undefined ? '' : ` · ${e.metaLeft}`}`),
+      ]),
+    ]),
+    '',
+    ['full timeline: ', { text: TIMELINE_PATH, href: TIMELINE_PATH }],
+  )
 }
 
 function printContact(): OutputLine[] {
@@ -286,6 +323,13 @@ const commands: Command[] = [
     run: () => ok(...printCertifications()),
   },
   {
+    name: 'timeline',
+    usage: 'timeline [category]',
+    description: 'achievements by year, optionally one category',
+    args: timelineIds,
+    run: ([category], ctx) => printTimeline(ctx.now(), category),
+  },
+  {
     name: 'github',
     description: 'live stats from the GitHub API',
     run: async (_args, ctx) => {
@@ -343,7 +387,7 @@ const commands: Command[] = [
   {
     name: 'open',
     usage: 'open <target>',
-    description: 'open github, linkedin, orcid, resume, email or a repo',
+    description: 'open github, linkedin, orcid, resume, email, timeline or a repo',
     args: () => Object.keys(openTargets()),
     run: ([target], ctx) => {
       const targets = openTargets()

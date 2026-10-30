@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 
-/** Adds `is-visible` to every `.reveal` element the first time it scrolls into view. */
-export function useRevealOnScroll() {
+/**
+ * Adds `is-visible` to every `.reveal` element the first time it scrolls into view.
+ * Pass a `key` that changes when new `.reveal` elements mount (e.g. a filter) to observe them too.
+ */
+export function useRevealOnScroll(key?: unknown) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -14,7 +17,7 @@ export function useRevealOnScroll() {
       },
       { rootMargin: '0px 0px -8% 0px' },
     )
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => observer.observe(el))
     return () => observer.disconnect()
-  }, [])
+  }, [key])
 }

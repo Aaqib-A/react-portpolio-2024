@@ -104,6 +104,20 @@ describe('execute', () => {
     expect(text(await execute('cat certifications', makeCtx()))).toContain('TensorFlow in Practice')
   })
 
+  it('prints the achievements timeline by year, optionally one category', async () => {
+    const out = text(await execute('timeline', makeCtx()))
+    expect(out).toContain('2026\n  now  Software Engineer · The Ninja Studio · Oct 2024 — Present')
+    expect(out).toContain('  Aug  Kubernetes Certified Application Developer (CKAD) · Udemy\n')
+    expect(out).toContain('  Jun  Senior Backend Developer · Getafix Technologies · Apr 2022 — Jun 2024')
+    expect(out).toContain('full timeline: /timeline')
+
+    const papers = text(await execute('timeline papers', makeCtx()))
+    expect(papers).toContain('A Space Shooter Game')
+    expect(papers).not.toContain('Udemy')
+    expect(text(await execute('timeline cert', makeCtx()))).not.toContain('The Ninja Studio')
+    expect((await execute('timeline nope', makeCtx())).error).toBe(true)
+  })
+
   it('switches theme, including toggle', async () => {
     const ctx = makeCtx()
     await execute('theme light', ctx)
@@ -130,6 +144,8 @@ describe('execute', () => {
     const ctx = makeCtx()
     await execute('open mini-blockchain', ctx)
     expect(ctx.openUrl).toHaveBeenCalledWith('https://github.com/Aaqib-A/mini-blockchain')
+    await execute('open timeline', ctx)
+    expect(ctx.openUrl).toHaveBeenCalledWith('/timeline')
     expect((await execute('open evil.com', ctx)).error).toBe(true)
   })
 
@@ -169,6 +185,7 @@ describe('complete', () => {
   it('completes arguments for commands that take them', () => {
     expect(complete('goto ex')).toEqual({ value: 'goto experience ', options: [] })
     expect(complete('sudo h')).toEqual({ value: 'sudo hire-aaqib ', options: [] })
+    expect(complete('timeline r')).toEqual({ value: 'timeline research ', options: [] })
     expect(complete('theme ').options).toEqual(['dark', 'light', 'toggle'])
   })
 

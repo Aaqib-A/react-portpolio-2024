@@ -5,6 +5,7 @@ Personal portfolio of Aaqib Ansari, Senior Backend Engineer. The design extends 
 - **An interactive terminal** in the hero. Type `help`, `whoami`, `projects`, `goto contact`, `github`, `theme light` or `sudo hire-aaqib`. It supports Tab completion and ↑/↓ history, and you can press `/` anywhere to focus it.
 - **Live GitHub data.** A Netlify Function (`/api/github`) feeds the project cards and the "Live from GitHub" strip. It is cached on Netlify's CDN for an hour and rate-limited per IP.
 - **A contact form** handled by Netlify Forms, plus a direct email link.
+- **An achievements timeline** at `/timeline`: every role, degree, research paper and certification on one vertical timeline, filterable by category. It is drawn to scale like a rail map: each role and degree runs on its own rail, as long as it lasted, with papers and certifications as stops on the main line (certifications earned close together share one card). It is built from the same data as the main page, so there is nothing extra to update. The terminal's `timeline [category]` command prints it too.
 
 ## Stack
 
@@ -12,7 +13,7 @@ Vite · React 19 · TypeScript · Tailwind CSS v4 · Netlify Functions · Vitest
 
 ## Editing content
 
-All content lives in one file, [`src/data/portfolio.ts`](src/data/portfolio.ts). That includes the bio, skills, experience, projects, research papers, education, certifications and links. The page, the terminal commands and the generated `llms.txt` all read from it.
+All content lives in one file, [`src/data/portfolio.ts`](src/data/portfolio.ts). That includes the bio, skills, experience, projects, research papers, education, certifications and links. The main page, the `/timeline` page, the terminal commands and the generated `llms.txt` all read from it.
 
 ## Local development
 
