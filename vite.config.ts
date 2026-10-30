@@ -2,6 +2,7 @@
 import netlify from '@netlify/vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import {
   certifications,
@@ -59,7 +60,7 @@ function llmsTxt(): string {
   return lines.join('\n') + '\n'
 }
 
-/** Injects the site URL into index.html and emits llms.txt, sitemap.xml and robots.txt. */
+/** Injects the site URL into every HTML page and emits llms.txt, sitemap.xml and robots.txt. */
 function siteMeta(): Plugin {
   return {
     name: 'site-meta',
@@ -73,6 +74,7 @@ function siteMeta(): Plugin {
         source: `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${siteUrl}/</loc><lastmod>${today}</lastmod></url>
+  <url><loc>${siteUrl}/timeline</loc><lastmod>${today}</lastmod></url>
 </urlset>
 `,
       })
@@ -94,6 +96,15 @@ export default defineConfig(({ command }) => ({
     // Edge functions are off: the site has none, and that emulator needs a matching Deno install.
     ...(command === 'serve' && !process.env.VITEST ? [netlify({ edgeFunctions: { enabled: false } })] : []),
   ],
+  build: {
+    // Two pages: the portfolio and the achievements timeline (served at /timeline).
+    rolldownOptions: {
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        timeline: resolve(import.meta.dirname, 'timeline.html'),
+      },
+    },
+  },
   test: {
     include: ['src/**/*.test.ts'],
   },

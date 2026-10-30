@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from 'react'
 import { fullName, navLinks, personal } from '../data/portfolio'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { scrollToSection } from '../lib/page'
+import { TIMELINE_PATH } from '../lib/timeline'
 import { WRAP } from './Section'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -13,9 +14,19 @@ function go(e: MouseEvent<HTMLAnchorElement>, id: string) {
   scrollToSection(id)
 }
 
-export function Nav() {
+export type Page = 'home' | 'timeline'
+
+/** On the home page links scroll to sections; elsewhere they navigate to `/#section`. */
+export function Nav({ page = 'home' }: { page?: Page }) {
   const [open, setOpen] = useState(false)
   const active = useActiveSection(sectionIds)
+  const home = page === 'home'
+  const sectionHref = (id: string) => (home ? `#${id}` : `/#${id}`)
+
+  const linkClass = (current: boolean) =>
+    `relative text-sm font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-[22px] after:h-0.5 after:bg-brand after:transition-opacity ${
+      current ? 'text-accent after:opacity-100' : 'text-soft after:opacity-0 hover:text-accent'
+    }`
 
   const resumeButton = (extra: string) => (
     <a
@@ -31,27 +42,36 @@ export function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas/85 backdrop-blur-md">
       <div className={`${WRAP} flex h-16 items-center justify-between`}>
-        <a href="#about" onClick={(e) => go(e, 'about')} className="flex items-center gap-2.5 text-ink">
+        <a
+          href={home ? '#about' : '/'}
+          onClick={home ? (e) => go(e, 'about') : undefined}
+          className="flex items-center gap-2.5 text-ink"
+        >
           <span className="grid size-8 place-items-center rounded-md bg-brand text-[13px] font-bold tracking-tight text-white">
             {initials}
           </span>
           <span className="text-[15px] font-medium">{fullName}</span>
         </a>
 
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden items-center gap-5 lg:flex xl:gap-7">
           {navLinks.map((l) => (
             <a
               key={l.id}
-              href={`#${l.id}`}
-              onClick={(e) => go(e, l.id)}
-              aria-current={active === l.id ? 'true' : undefined}
-              className={`relative text-sm font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-[22px] after:h-0.5 after:bg-brand after:transition-opacity ${
-                active === l.id ? 'text-accent after:opacity-100' : 'text-soft after:opacity-0 hover:text-accent'
-              }`}
+              href={sectionHref(l.id)}
+              onClick={home ? (e) => go(e, l.id) : undefined}
+              aria-current={home && active === l.id ? 'true' : undefined}
+              className={linkClass(home && active === l.id)}
             >
               {l.label}
             </a>
           ))}
+          <a
+            href={TIMELINE_PATH}
+            aria-current={page === 'timeline' ? 'page' : undefined}
+            className={linkClass(page === 'timeline')}
+          >
+            Timeline
+          </a>
           <ThemeToggle />
           {resumeButton('px-4 py-2')}
         </div>
@@ -76,16 +96,25 @@ export function Nav() {
             {navLinks.map((l) => (
               <a
                 key={l.id}
-                href={`#${l.id}`}
+                href={sectionHref(l.id)}
                 onClick={(e) => {
                   setOpen(false)
-                  go(e, l.id)
+                  if (home) go(e, l.id)
                 }}
                 className="py-3 text-[15px] font-medium text-soft transition-colors hover:text-accent"
               >
                 {l.label}
               </a>
             ))}
+            <a
+              href={TIMELINE_PATH}
+              aria-current={page === 'timeline' ? 'page' : undefined}
+              className={`py-3 text-[15px] font-medium transition-colors hover:text-accent ${
+                page === 'timeline' ? 'text-accent' : 'text-soft'
+              }`}
+            >
+              Timeline
+            </a>
             {resumeButton('mt-2 w-fit px-4 py-2.5')}
           </div>
         </div>
