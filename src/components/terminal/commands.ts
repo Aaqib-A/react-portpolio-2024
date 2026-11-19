@@ -71,7 +71,7 @@ export const SECTIONS: SectionId[] = [
 const GITHUB_URL = `https://github.com/${personal.githubUser}`
 const HIRE_MESSAGE = `Hi Aaqib,
 
-I came across your portfolio and would like to talk to you about a backend role.
+I came across your portfolio and would like to talk to you about a software engineering role.
 
 `
 

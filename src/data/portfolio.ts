@@ -72,15 +72,15 @@ export interface Project {
 export const personal = {
   firstName: 'Aaqib',
   lastName: 'Ansari',
-  title: 'Senior Backend Engineer',
+  title: 'Senior Software Engineer',
   location: 'Mumbai, India',
   email: 'aaqib.ansari022@gmail.com',
   githubUser: 'Aaqib-A',
   resumeUrl: 'https://drive.google.com/file/d/1WK_HHL-oEFYW5sEQEzTmL_cHcaRg0VEU/view?usp=sharing',
   status: 'Open to Software Engineering roles & freelance work',
   /** Part of the bio that the hero sets in bold. */
-  bioHighlight: '8+ years',
-  bio: 'Software engineer with 8+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS and also design and create distributed systems capable of handling 1000s of requests per second. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
+  bioHighlight: '6+ years',
+  bio: 'Software engineer with 6+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS and also design and create distributed systems capable of handling 1000s of requests per second. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
   currentWork: {
     text: 'Currently a Software Engineer at',
     company: 'The Ninja Studio',
@@ -133,7 +133,7 @@ export const skills: Record<string, string[]> = {
   Tools: ['VS Code', 'Postman', 'Figma', 'Jira'],
 }
 
-export const skillsFootnote = '& whatever the backend demands next.'
+export const skillsFootnote = '& whatever the software demands next.'
 
 export const experience: Experience[] = [
   {
@@ -328,7 +328,7 @@ export const education: Education[] = [
     institution: 'University of Mumbai',
     college: "Padmabhushan Vasantdada Patil Pratishthan's College of Engineering",
     location: 'Sion, Mumbai',
-    period: 'Apr 2015 — Apr 2018',
+    period: 'Jul 2015 — Jul 2018',
     grade: 'CGPA: 7.4',
   },
   {
