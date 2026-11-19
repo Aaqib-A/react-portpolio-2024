@@ -1,6 +1,6 @@
 # Aaqib Ansari · Portfolio
 
-Personal portfolio of Aaqib Ansari, Senior Backend Engineer. The design extends the resume (Roboto, the resume's `#492c89` purple, its contact band, section headings, ticks and skill pills) into a single page with:
+Personal portfolio of Aaqib Ansari, Senior Software Engineer. The design extends the resume (Roboto, the resume's `#492c89` purple, its contact band, section headings, ticks and skill pills) into a single page with:
 
 - **An interactive terminal** in the hero. Type `help`, `whoami`, `projects`, `goto contact`, `github`, `theme light` or `sudo hire-aaqib`. It supports Tab completion and ↑/↓ history, and you can press `/` anywhere to focus it.
 - **Live GitHub data.** A Netlify Function (`/api/github`) feeds the project cards and the "Live from GitHub" strip. It is cached on Netlify's CDN for an hour and rate-limited per IP.
@@ -31,12 +31,14 @@ Without a token, GitHub allows 60 API requests per hour per IP. If the live data
 
 1. In Netlify, choose **Add new site → Import an existing project** and pick this repository. The build command, publish directory, Node version and functions directory all come from `netlify.toml`.
 2. Optional but recommended: add an environment variable **`GITHUB_TOKEN`**. Use a GitHub fine-grained personal access token with **no** permissions; public read access is enough. Netlify's servers share IP addresses, so the anonymous GitHub limit can run out.
-3. Under **Forms**, click **Enable form detection** and redeploy. Then go to **Forms → Form notifications → Add notification → Email notification** so contact messages reach your inbox.
+3. Open **Forms** in the project's left sidebar (not under Project configuration), click **Enable form detection**, then redeploy. Then go to **Forms → Submission notifications → Add notification → Email notification** so contact messages reach your inbox.
 
 After deploying, check that:
 - The deploy log lists the `github` function and its rate-limit rule.
 - The Forms tab shows a form named `contact`.
 - A second request to `/api/github` returns a `cache-status` header showing a Netlify cache hit.
+
+If the contact form shows "Something went wrong" and a POST to `/` returns the 404 page, Netlify hasn't registered the form: form detection is off, or the site hasn't been redeployed since it was turned on. You can tell from the live HTML. Once detection has run, the hidden `<form name="contact">` no longer has `data-netlify="true"` and gains a hidden `form-name` input. Netlify Forms doesn't run under `npm run dev`, so the form always shows the error locally.
 
 ## Design tokens
 
