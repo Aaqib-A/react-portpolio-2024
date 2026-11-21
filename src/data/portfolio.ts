@@ -123,13 +123,25 @@ export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
 }
 
 export const skills: Record<string, string[]> = {
-  Languages: ['Python', 'TypeScript', 'JavaScript', 'Haskell', 'SQL', 'C#'],
-  Backend: ['Django', 'Django REST Framework', 'Django Channels', 'Jinja', 'Celery', 'Node.js', 'Express', 'Flask', 'Strapi'],
-  Frontend: ['React'],
-  'Data Stores': ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
-  'APIs & Realtime': ['REST', 'GraphQL', 'WebSockets', 'Socket.io', 'OAuth2', 'Auth0', 'Clerk', 'Cron Jobs'],
-  'DevOps & Cloud': ['Docker', 'Docker Compose', 'Kubernetes', 'Nix', 'Nix Flakes', 'AWS', 'Netlify', 'nginx', 'Gunicorn', 'Linux', 'Git'],
-  'AI / ML & Data': ['LLM Prototyping', 'NL-to-SQL', 'Whisper', 'spaCy', 'NLP', 'Pandas', 'NumPy', 'Matplotlib', 'Selenium', 'ReportLab'],
+  Languages: ['Python', 'TypeScript', 'JavaScript', 'SQL'],
+  Backend: [
+    'Django', 'Django REST Framework', 'FastAPI', 'Flask', 'Node.js', 'Express.js', 'Celery', 'Django Channels',
+    'Microservices', 'REST APIs', 'GraphQL', 'Jinja', 'Strapi', 'Nix', 'Nix Flakes', 'Cron Jobs',
+  ],
+  Frontend: ['React', 'Streamlit'],
+  Databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Elasticsearch', 'pgvector'],
+  'Messaging & Realtime': ['Kafka', 'RabbitMQ', 'WebSockets', 'Socket.io', 'MQTT'],
+  'AI / ML': [
+    'LLMs', 'Generative AI', 'RAG (Retrieval-Augmented Generation)', 'LangChain', 'OpenAI API',
+    'Hugging Face Transformers', 'NLP', 'spaCy', 'Whisper', 'Text-to-SQL', 'Pandas', 'NumPy', 'PyTorch',
+    'scikit-learn', 'MCP (Model Context Protocol)', 'Vector Databases', 'Ollama',
+  ],
+  'DevOps & Cloud': [
+    'Docker', 'Kubernetes', 'AWS (EC2, S3, Lambda, RDS)', 'CI/CD', 'GitHub Actions', 'Terraform', 'Nginx',
+    'Linux', 'Git', 'Netlify', 'Cloudflare', 'CloudFront', 'Gunicorn',
+  ],
+  'Testing & Practices': ['pytest', 'TDD', 'Unit Testing', 'Selenium', 'Agile/Scrum'],
+  'Auth & Security': ['OAuth2', 'JWT', 'Auth0', 'Clerk'],
   Tools: ['VS Code', 'Postman', 'Figma', 'Jira'],
 }
 
