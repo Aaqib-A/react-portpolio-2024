@@ -71,6 +71,8 @@ body {
   background: var(--canvas);
   color: var(--soft);
   font-family: var(--font-sans);
+  /* Inherited by all text. The terminal opts out with text-left to keep its output shell-like. */
+  text-align: justify;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
