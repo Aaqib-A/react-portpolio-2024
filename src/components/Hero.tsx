@@ -33,8 +33,8 @@ export function Hero() {
             {personal.status}
           </p>
 
-          <h1 className="mt-6 text-5xl tracking-tight text-ink sm:text-6xl">{fullName}</h1>
-          <p className="mt-3 text-2xl text-accent sm:text-[1.75rem]">{personal.title}</p>
+          <h1 className="mt-6 text-5xl tracking-tight text-accent sm:text-6xl">{fullName}</h1>
+          <p className="mt-3 text-2xl text-highlight sm:text-[1.75rem]">{personal.title}</p>
 
           <p className="mt-6 max-w-xl leading-relaxed text-soft md:text-[1.0625rem]">
             {lead}

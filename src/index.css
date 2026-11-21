@@ -2,7 +2,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Colours and type mirror the resume PDF: Roboto, ink on white, and its #492c89 purple.
+/* Colours and type mirror the resume PDF: Roboto, ink on white, its #492c89 purple, and its #dc3646 red
+   (--highlight) for the title, sub-headings, bullets and ticks.
    Components use the semantic names below, so dark mode only has to swap the variables. */
 :root {
   --canvas: #ffffff;
@@ -15,6 +16,7 @@
   --brand: #492c89;
   --brand-strong: #3a2170;
   --brand-soft: #f0ecf8;
+  --highlight: #dc3646;
   /* Education rails on the /timeline page; work rails use the accent. */
   --edu: #0f766e;
 }
@@ -30,6 +32,7 @@ html.dark {
   --brand: #4f3194;
   --brand-strong: #5d3ca8;
   --brand-soft: #211a35;
+  --highlight: #f06371;
   --edu: #2dd4bf;
 }
 
@@ -56,6 +59,7 @@ html.dark {
   --color-brand: var(--brand);
   --color-brand-strong: var(--brand-strong);
   --color-brand-soft: var(--brand-soft);
+  --color-highlight: var(--highlight);
   --color-edu: var(--edu);
 }
 
@@ -99,7 +103,7 @@ html.dark {
   top: calc(0.5lh - 0.25rem);
   width: 0.5rem;
   height: 0.5rem;
-  border: 1.5px solid var(--accent);
+  border: 1.5px solid var(--highlight);
   border-radius: 9999px;
 }
 
