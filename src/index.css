@@ -103,6 +103,27 @@ html.dark {
   border-radius: 9999px;
 }
 
+/* The resume's circuit artwork (see CircuitArt.tsx). The SVGs are masks, so the art takes the theme
+   accent; 8% opacity matches the PDF. z-index -1 keeps it under the content it sits behind. */
+.circuit {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--accent);
+  opacity: 0.08;
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+}
+.circuit-top {
+  aspect-ratio: 328 / 232;
+  mask-image: url('./assets/circuit-top.svg');
+}
+.circuit-bottom {
+  aspect-ratio: 316 / 163;
+  mask-image: url('./assets/circuit-bottom.svg');
+}
+
 /* Reveal on scroll. Scoped to .js so content stays visible without JavaScript. */
 .js .reveal {
   opacity: 0;

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Certifications } from './components/Certifications'
+import { CircuitArt } from './components/CircuitArt'
 import { Contact } from './components/Contact'
 import { ContactBand } from './components/ContactBand'
 import { Education } from './components/Education'
@@ -24,7 +25,7 @@ export default function App() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="relative">
         <Hero />
         <ContactBand />
         <Skills />
@@ -34,6 +35,7 @@ export default function App() {
         <Education />
         <Certifications />
         <Contact />
+        <CircuitArt at="bottom" />
       </main>
       <Footer />
     </>

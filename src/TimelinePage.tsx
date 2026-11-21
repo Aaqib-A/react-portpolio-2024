@@ -1,4 +1,5 @@
 import { Fragment, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { CircuitArt } from './components/CircuitArt'
 import { Footer } from './components/Footer'
 import { ArrowIcon } from './components/icons'
 import { Nav } from './components/Nav'
@@ -269,6 +270,8 @@ export default function TimelinePage() {
           aria-hidden="true"
           className="pointer-events-none absolute -top-48 -right-40 size-[44rem] rounded-full bg-brand/10 blur-3xl dark:bg-brand/25"
         />
+        <CircuitArt at="top" />
+        <CircuitArt at="bottom" />
 
         <div className={`${WRAP} relative`}>
           <header className="max-w-2xl">
