@@ -8,9 +8,10 @@ import { Experience } from './components/Experience'
 import { Footer } from './components/Footer'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
-import { Projects } from './components/Projects'
+import { PersonalProjects, Projects } from './components/Projects'
 import { Research } from './components/Research'
 import { Skills } from './components/Skills'
+import { isShown } from './data/portfolio'
 import { useRevealOnScroll } from './hooks/useRevealOnScroll'
 
 export default function App() {
@@ -30,7 +31,8 @@ export default function App() {
         <ContactBand />
         <Skills />
         <Experience />
-        <Projects />
+        {isShown('projects') && <Projects />}
+        <PersonalProjects />
         <Research />
         <Education />
         <Certifications />

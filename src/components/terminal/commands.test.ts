@@ -64,17 +64,17 @@ describe('execute', () => {
   })
 
   it('suggests the closest command for typos', async () => {
-    const result = await execute('projcts', makeCtx())
+    const result = await execute('experiance', makeCtx())
     expect(result.error).toBe(true)
-    expect(text(result)).toContain("did you mean 'projects'?")
+    expect(text(result)).toContain("did you mean 'experience'?")
     expect(suggest('xyzzy')).toBeUndefined()
   })
 
   it('scrolls to a section with goto and its cd alias', async () => {
     const ctx = makeCtx()
-    await execute('goto projects/', ctx)
+    await execute('goto research/', ctx)
     await execute('cd ~', ctx)
-    expect(ctx.scrollTo).toHaveBeenNthCalledWith(1, 'projects')
+    expect(ctx.scrollTo).toHaveBeenNthCalledWith(1, 'research')
     expect(ctx.scrollTo).toHaveBeenNthCalledWith(2, 'about')
     expect((await execute('cd nowhere', ctx)).error).toBe(true)
   })
@@ -173,7 +173,7 @@ describe('execute', () => {
 
 describe('complete', () => {
   it('completes a unique command name', () => {
-    expect(complete('proj')).toEqual({ value: 'projects ', options: [] })
+    expect(complete('skil')).toEqual({ value: 'skills ', options: [] })
   })
 
   it('returns the common prefix and options when ambiguous', () => {

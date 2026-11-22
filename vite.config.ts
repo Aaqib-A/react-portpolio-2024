@@ -9,7 +9,9 @@ import {
   education,
   experience,
   fullName,
+  isShown,
   personal,
+  personalProjects,
   projects,
   publications,
   skills,
@@ -35,11 +37,19 @@ function llmsTxt(): string {
     '## Experience',
     ...experience.flatMap((e) => [
       `### ${e.role}, ${e.company} (${e.period})`,
+      ...(e.about ? [e.about] : []),
       ...e.points.map((p) => `- ${p}`),
       '',
     ]),
-    '## Projects',
-    ...projects.map((p) => `- [${p.name}](${p.url}): ${p.tagline}. ${p.points.join(' ')}`),
+    ...(isShown('projects')
+      ? [
+          '## Projects',
+          ...projects.map((p) => `- ${p.name} (${p.period}): ${p.tagline}. ${p.points.join(' ')}`),
+          '',
+        ]
+      : []),
+    '## Personal projects',
+    ...personalProjects.map((p) => `- [${p.name}](${p.url}): ${p.tagline}. ${p.points.join(' ')}`),
     '',
     '## Research papers',
     ...publications.map((p) => `- [${p.title}](${p.url}), ${p.venue} (${p.date})${p.doi ? `, DOI ${p.doi}` : ''}`),

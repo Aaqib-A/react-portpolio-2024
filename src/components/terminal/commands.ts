@@ -7,7 +7,10 @@ import {
   education,
   experience,
   fullName,
+  hiddenSections,
+  isShown,
   personal,
+  personalProjects,
   projects,
   publications,
   skills,
@@ -57,16 +60,19 @@ interface Command {
   run(args: string[], ctx: TerminalContext): CommandResult | Promise<CommandResult>
 }
 
-export const SECTIONS: SectionId[] = [
-  'about',
-  'skills',
-  'experience',
-  'projects',
-  'research',
-  'education',
-  'certifications',
-  'contact',
-]
+export const SECTIONS: SectionId[] = (
+  [
+    'about',
+    'skills',
+    'experience',
+    'projects',
+    'personal-projects',
+    'research',
+    'education',
+    'certifications',
+    'contact',
+  ] satisfies SectionId[]
+).filter(isShown)
 
 const GITHUB_URL = `https://github.com/${personal.githubUser}`
 const HIRE_MESSAGE = `Hi Aaqib,
@@ -107,7 +113,7 @@ const openTargets = (): Record<string, string> => ({
   resume: personal.resumeUrl,
   email: `mailto:${personal.email}`,
   timeline: TIMELINE_PATH,
-  ...Object.fromEntries(projects.map((p) => [p.repo.toLowerCase(), p.url])),
+  ...Object.fromEntries(personalProjects.map((p) => [p.repo.toLowerCase(), p.url])),
 })
 
 /** Accepts `projects`, `projects/`, `./projects` and `#projects`. */
@@ -142,8 +148,12 @@ function printExperience(): OutputLine[] {
 }
 
 function printProjects(): OutputLine[] {
+  return projects.flatMap((p) => [[strong(p.name), ` · ${p.tagline}`], muted(`  ${p.period}`)])
+}
+
+function printPersonalProjects(): OutputLine[] {
   return [
-    ...projects.map((p): OutputLine => [{ text: p.name, href: p.url, tone: 'strong' }, ` · ${p.tagline}`]),
+    ...personalProjects.map((p): OutputLine => [{ text: p.name, href: p.url, tone: 'strong' }, ` · ${p.tagline}`]),
     '',
     muted("tip: 'open <repo>' opens one on GitHub, e.g. 'open mini-blockchain'"),
   ]
@@ -216,6 +226,8 @@ function printSection(section: SectionId): OutputLine[] {
       return printExperience()
     case 'projects':
       return printProjects()
+    case 'personal-projects':
+      return printPersonalProjects()
     case 'research':
       return printResearch()
     case 'education':
@@ -229,7 +241,7 @@ function printSection(section: SectionId): OutputLine[] {
 
 // ── The registry ──
 
-const commands: Command[] = [
+const allCommands: Command[] = [
   {
     name: 'help',
     description: 'list available commands',
@@ -257,7 +269,7 @@ const commands: Command[] = [
     run: ([arg]) => {
       if (!arg) return ok([...SECTIONS.map((s) => `${s}/`), 'resume.pdf'].join('  '))
       const section = toSection(arg)
-      if (section === 'projects') return ok(projects.map((p) => p.repo).join('  '))
+      if (section === 'personal-projects') return ok(personalProjects.map((p) => p.repo).join('  '))
       if (section === 'skills') return ok(skillCategories().join('  '))
       if (section) return ok(...printSection(section))
       return fail(`ls: cannot access '${arg}': no such section`)
@@ -302,8 +314,13 @@ const commands: Command[] = [
   },
   {
     name: 'projects',
-    description: 'selected projects',
+    description: 'client projects from work',
     run: () => ok(...printProjects()),
+  },
+  {
+    name: 'personal-projects',
+    description: 'personal projects on GitHub',
+    run: () => ok(...printPersonalProjects()),
   },
   {
     name: 'research',
@@ -465,6 +482,9 @@ const commands: Command[] = [
     run: () => ok("there's no escape. but there is a 'contact' command."),
   },
 ]
+
+// A hidden section's own command goes with it.
+const commands = allCommands.filter((c) => !(hiddenSections as readonly string[]).includes(c.name))
 
 const byName = new Map<string, Command>()
 for (const c of commands) {

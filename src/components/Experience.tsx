@@ -15,6 +15,7 @@ export function Experience() {
               {exp.tag && <Chip>{exp.tag}</Chip>}
             </div>
             <p className="text-xl leading-snug text-ink">{exp.company}</p>
+            {exp.about && <p className="mt-1 text-sm italic leading-relaxed text-muted">{exp.about}</p>}
             <MetaRow left={exp.period} right={exp.location} />
 
             <p className="mt-4 mb-2 text-sm italic text-highlight">Achievements/Tasks</p>
