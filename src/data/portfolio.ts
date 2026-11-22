@@ -1,6 +1,6 @@
 // Single source of truth for every piece of content on the site.
-// Used by the React UI, the interactive terminal, and the build-time
-// llms.txt / sitemap generator in vite.config.ts.
+// Used by the React UI, the interactive terminal, the build-time
+// llms.txt / sitemap generator in vite.config.ts, and resume.json (src/lib/resume.ts).
 
 export type SectionId =
   | 'about'
@@ -92,6 +92,10 @@ export const personal = {
   lastName: 'Ansari',
   title: 'Senior Software Engineer',
   location: 'Mumbai, India',
+  /** ISO 3166-1 alpha-2 country code, for resume.json. */
+  countryCode: 'IN',
+  /** The live site; resume.json links here wherever it is generated (build, terminal or CLI). */
+  website: 'https://aaqib-ansari.dev',
   email: 'aaqib.ansari022@gmail.com',
   githubUser: 'Aaqib-A',
   resumeUrl: 'https://drive.google.com/file/d/1WK_HHL-oEFYW5sEQEzTmL_cHcaRg0VEU/view?usp=sharing',

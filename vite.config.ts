@@ -17,6 +17,7 @@ import {
   skills,
   socials,
 } from './src/data/portfolio.ts'
+import { RESUME_PATH, resumeJsonMin } from './src/lib/resume.ts'
 
 // Netlify sets URL to the site's primary address during builds.
 const siteUrl = (process.env.URL ?? process.env.SITE_URL ?? 'http://localhost:4173').replace(/\/$/, '')
@@ -29,7 +30,8 @@ function llmsTxt(): string {
     '',
     '## Links',
     ...socials.map((s) => `- ${s.label}: ${s.url}`),
-    `- Resume: ${personal.resumeUrl}`,
+    `- Resume (PDF): ${personal.resumeUrl}`,
+    `- Resume (JSON Resume): ${siteUrl}${RESUME_PATH}`,
     '',
     '## Skills',
     ...Object.entries(skills).map(([category, items]) => `- ${category}: ${items.join(', ')}`),
@@ -70,14 +72,41 @@ function llmsTxt(): string {
   return lines.join('\n') + '\n'
 }
 
-/** Injects the site URL into every HTML page and emits llms.txt, sitemap.xml and robots.txt. */
+const escapeHtml = (text: string) =>
+  text.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
+
+/**
+ * Plain HTML that sits in #root until React replaces it. Tools that read raw HTML without running
+ * JavaScript (AI assistants, recruiter scrapers, link previews) get a summary and links to the
+ * machine-readable resume. `.js #root > .static-summary` in index.css hides it from everyone else.
+ */
+function staticSummary(): string {
+  const link = (href: string, text = href) => `<a href="${escapeHtml(href)}">${escapeHtml(text)}</a>`
+  return [
+    '<div class="static-summary">',
+    `<h1>${escapeHtml(`${fullName}, ${personal.title}`)}</h1>`,
+    `<p>${escapeHtml(`${personal.location}. ${personal.bio}`)}</p>`,
+    `<p>Resume as JSON (JSON Resume format): ${link(`${siteUrl}${RESUME_PATH}`)}. ` +
+      `Full profile as text: ${link(`${siteUrl}/llms.txt`)}. ` +
+      `Achievements timeline: ${link(`${siteUrl}/timeline`)}.</p>`,
+    `<p>${socials.map((s) => link(s.url, s.url.startsWith('mailto:') ? personal.email : s.label)).join(' · ')}</p>`,
+    '</div>',
+  ].join('')
+}
+
+/**
+ * Injects the site URL and the static summary into every HTML page, and emits llms.txt,
+ * resume.json, sitemap.xml and robots.txt.
+ */
 function siteMeta(): Plugin {
   return {
     name: 'site-meta',
-    transformIndexHtml: (html) => html.replaceAll('__SITE_URL__', siteUrl),
+    transformIndexHtml: (html) =>
+      html.replace('<!--static-summary-->', staticSummary()).replaceAll('__SITE_URL__', siteUrl),
     generateBundle() {
       const today = new Date().toISOString().slice(0, 10)
       this.emitFile({ type: 'asset', fileName: 'llms.txt', source: llmsTxt() })
+      this.emitFile({ type: 'asset', fileName: RESUME_PATH.slice(1), source: resumeJsonMin() })
       this.emitFile({
         type: 'asset',
         fileName: 'sitemap.xml',
