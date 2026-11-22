@@ -1,16 +1,22 @@
 // Single source of truth for every piece of content on the site.
-// Used by the React UI, the interactive terminal, and the build-time
-// llms.txt / sitemap generator in vite.config.ts.
+// Used by the React UI, the interactive terminal, the build-time
+// llms.txt / sitemap generator in vite.config.ts, and resume.json (src/lib/resume.ts).
 
 export type SectionId =
   | 'about'
   | 'skills'
   | 'experience'
   | 'projects'
+  | 'personal-projects'
   | 'research'
   | 'education'
   | 'certifications'
   | 'contact'
+
+/** Sections that are built but kept off the site for now: the page, nav, terminal and llms.txt all skip them.
+    Remove an id here to bring its section back. */
+export const hiddenSections: readonly SectionId[] = ['projects']
+export const isShown = (id: SectionId) => !hiddenSections.includes(id)
 
 export interface Link {
   label: string
@@ -21,6 +27,8 @@ export interface Experience {
   role: string
   tag?: string
   company: string
+  /** One-line description of the company, set in italics under its name as on the resume. */
+  about?: string
   companyUrl?: string
   location?: string
   period: string
@@ -59,9 +67,19 @@ export interface Certification {
   url: string
 }
 
+/** Client work from the resume. It has no public repo or page to link to. */
 export interface Project {
   name: string
-  /** GitHub repository name, used to merge in live stats. */
+  period: string
+  tagline: string
+  points: string[]
+  tech: string[]
+}
+
+/** Something I built on my own, published on GitHub. */
+export interface PersonalProject {
+  name: string
+  /** GitHub repository name, used to merge in live stats and as a terminal `open` target. */
   repo: string
   tagline: string
   points: string[]
@@ -74,13 +92,17 @@ export const personal = {
   lastName: 'Ansari',
   title: 'Senior Software Engineer',
   location: 'Mumbai, India',
+  /** ISO 3166-1 alpha-2 country code, for resume.json. */
+  countryCode: 'IN',
+  /** The live site; resume.json links here wherever it is generated (build, terminal or CLI). */
+  website: 'https://aaqib-ansari.dev',
   email: 'aaqib.ansari022@gmail.com',
   githubUser: 'Aaqib-A',
   resumeUrl: 'https://drive.google.com/file/d/1WK_HHL-oEFYW5sEQEzTmL_cHcaRg0VEU/view?usp=sharing',
   status: 'Open to Software Engineering roles & freelance work',
   /** Part of the bio that the hero sets in bold. */
   bioHighlight: '6+ years',
-  bio: 'Software engineer with 6+ years across industry and research. I design and ship Python/Django and Node.js services: REST and real-time APIs on PostgreSQL, Redis and Elasticsearch, run on Docker, Kubernetes and AWS and also design and create distributed systems capable of handling 1000s of requests per second. Lately I also build AI prototypes, such as chatbots and natural-language-to-SQL tools.',
+  bio: 'Senior Software Engineer with 6+ years of experience designing and scaling production backend systems in Python and Django. I build high-performance REST and GraphQL APIs and distributed services, run them on AWS and Kubernetes, and increasingly integrate LLM capabilities (RAG, natural-language-to-SQL, chatbots) into real-world products. I focus on clean architecture, reliability, and shipping software that holds up under real traffic.',
   currentWork: {
     text: 'Currently a Software Engineer at',
     company: 'The Ninja Studio',
@@ -102,20 +124,28 @@ export const terminalIntro: { prompt: string; output: string }[] = [
   { prompt: 'echo $STACK', output: 'Python · Django · Node.js · PostgreSQL · Redis · Docker · Kubernetes · AWS' },
 ]
 
-export const navLinks: { id: SectionId; label: string }[] = [
-  { id: 'skills', label: 'Skills' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'research', label: 'Research' },
-  { id: 'education', label: 'Education' },
-  { id: 'certifications', label: 'Certifications' },
-  { id: 'contact', label: 'Contact' },
-]
+/** `short` replaces `label` in the desktop bar, where space is tight; the mobile menu shows `label`. */
+type NavLink = { id: SectionId; label: string; short?: string }
+
+export const navLinks: NavLink[] = (
+  [
+    { id: 'skills', label: 'Skills' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' },
+    // Shortened only while the client Projects link sits beside it.
+    { id: 'personal-projects', label: 'Personal Projects', short: isShown('projects') ? 'Personal' : undefined },
+    { id: 'research', label: 'Research' },
+    { id: 'education', label: 'Education' },
+    { id: 'certifications', label: 'Certifications' },
+    { id: 'contact', label: 'Contact' },
+  ] satisfies NavLink[]
+).filter((l) => isShown(l.id))
 
 export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
   skills: 'Skills',
   experience: 'Work Experience',
   projects: 'Projects',
+  'personal-projects': 'Personal Projects',
   research: 'Research Papers',
   education: 'Education',
   certifications: 'Certifications',
@@ -123,13 +153,26 @@ export const sectionTitles: Record<Exclude<SectionId, 'about'>, string> = {
 }
 
 export const skills: Record<string, string[]> = {
-  Languages: ['Python', 'TypeScript', 'JavaScript', 'Haskell', 'SQL', 'C#'],
-  Backend: ['Django', 'Django REST Framework', 'Django Channels', 'Jinja', 'Celery', 'Node.js', 'Express', 'Flask', 'Strapi'],
-  Frontend: ['React'],
-  'Data Stores': ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
-  'APIs & Realtime': ['REST', 'GraphQL', 'WebSockets', 'Socket.io', 'OAuth2', 'Auth0', 'Clerk', 'Cron Jobs'],
-  'DevOps & Cloud': ['Docker', 'Docker Compose', 'Kubernetes', 'Nix', 'Nix Flakes', 'AWS', 'Netlify', 'nginx', 'Gunicorn', 'Linux', 'Git'],
-  'AI / ML & Data': ['LLM Prototyping', 'NL-to-SQL', 'Whisper', 'spaCy', 'NLP', 'Pandas', 'NumPy', 'Matplotlib', 'Selenium', 'ReportLab'],
+  Languages: ['Python', 'TypeScript', 'JavaScript', 'SQL'],
+  Backend: [
+    'Django', 'Django REST Framework', 'Django ORM', 'FastAPI', 'Flask', 'Node.js', 'Express.js', 'Celery',
+    'Django Channels', 'Microservices', 'REST APIs', 'GraphQL', 'Hasura', 'Jinja', 'Strapi', 'Nix', 'Nix Flakes',
+    'Cron Jobs',
+  ],
+  Frontend: ['React', 'Streamlit', 'Tkinter'],
+  Databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Cassandra', 'Redis', 'Elasticsearch', 'pgvector'],
+  'Messaging & Realtime': ['Kafka', 'RabbitMQ', 'WebSockets', 'Socket.io', 'MQTT', 'UDP', 'Serialport (RS422)'],
+  'AI / ML': [
+    'LLMs', 'Generative AI', 'RAG (Retrieval-Augmented Generation)', 'LangChain', 'OpenAI API',
+    'Hugging Face Transformers', 'NLP', 'spaCy', 'Whisper', 'Computer Vision', 'Text-to-SQL', 'Pandas', 'NumPy',
+    'Matplotlib', 'PyTorch', 'scikit-learn', 'MCP (Model Context Protocol)', 'Vector Databases', 'Ollama',
+  ],
+  'DevOps & Cloud': [
+    'Docker', 'Kubernetes', 'AWS (EC2, S3, Lambda, RDS, EKS)', 'CI/CD', 'GitHub Actions', 'Nginx',
+    'Prometheus', 'Grafana', 'Linux', 'Git', 'Netlify', 'Cloudflare', 'CloudFront', 'Gunicorn',
+  ],
+  'Testing & Practices': ['pytest', 'TDD', 'Unit Testing', 'Selenium', 'Agile/Scrum'],
+  'Auth & Security': ['OAuth2', 'JWT', 'Auth0', 'Clerk'],
   Tools: ['VS Code', 'Postman', 'Figma', 'Jira'],
 }
 
@@ -140,16 +183,17 @@ export const experience: Experience[] = [
     role: 'Software Engineer',
     tag: 'Current',
     company: 'The Ninja Studio',
+    about:
+      'The Ninja Studio is a software development company specializing in delivering AI-powered, innovative, and flexible solutions to transform businesses.',
     location: 'Remote',
     period: 'Oct 2024 — Present',
     points: [
-      'Improved cron job efficiency by 85% through performance tuning and automation scripting.',
-      'Engineered AI-powered prototypes, such as chatbots and natural-language-to-SQL tools, for rapid client-facing validation.',
-      'Developed intelligent systems that link natural-language input to structured databases for actionable insights.',
-      'Created lightweight internal tools for fast AI proof-of-concept delivery.',
+      'Cut cron job runtime by 85% through performance tuning and automation scripting.',
+      'Engineered AI prototypes, including LLM chatbots and natural-language-to-SQL tools that turn plain-English questions into database queries, for rapid client-facing validation.',
+      'Built lightweight internal tools that speed up AI proof-of-concept delivery.',
       'Remediated security vulnerabilities in large distributed systems, working from penetration-test reports.',
-      'Act as the DevOps engineer on Kubernetes and AWS, resolving production system failures.',
-      'Maintain and improve software for hardware deployed on every continent except Antarctica.',
+      "Serve as the team's DevOps engineer on Kubernetes (AWS EKS) and AWS, diagnosing and resolving production incidents.",
+      'Maintain and improve software for IoT devices deployed on every continent except Antarctica.',
     ],
     tech: [
       'Python', 'Haskell', 'TypeScript', 'React', 'PostgreSQL', 'Redis', 'SQL', 'Kubernetes', 'Nix',
@@ -172,15 +216,16 @@ export const experience: Experience[] = [
   {
     role: 'Senior Backend Developer',
     company: 'Getafix Technologies',
+    about:
+      'Getafix is a service based startup company that actively build web and mobile apps for industries like Fintech, Logistics, Retail, and ECommerce.',
     location: 'Bangalore, Karnataka, India · Hybrid',
     period: 'Apr 2022 — Jun 2024',
     points: [
-      'Build and maintain web applications with Python, Django, PostgreSQL and Docker.',
-      'Design and ship RESTful web services and APIs.',
-      'Write and run scripts that safely modify production databases.',
-      'Integrate third-party services and APIs into the platform.',
-      "Trained and mentored 2 engineers, helping them grow and contribute to the team's success.",
-      'Review code and give feedback to other developers.',
+      'Developed and maintained web applications and REST APIs using Python, Django, Django REST Framework, PostgreSQL, and Docker.',
+      'Containerized applications with Docker and deployed them to AWS EC2.',
+      'Integrated third-party services and APIs, including payment gateways, SMS, maps.',
+      'Led a team of backend developers owning task planning and technical guidance through delivery.',
+      'Mentored developers and conducted code reviews to raise code quality across the team.',
     ],
     tech: [
       'Python', 'Django', 'Node.js', 'Express', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis',
@@ -191,13 +236,15 @@ export const experience: Experience[] = [
     role: 'Research Intern',
     tag: 'Research',
     company: 'Indian Institute of Geomagnetism',
+    about:
+      'The Indian Institute of Geomagnetism is an autonomous research institute by Department of Science & Technology, Govt. of India.',
     location: 'Navi Mumbai, Maharashtra, India',
     period: 'Feb 2021 — Mar 2022',
     points: [
-      "Worked directly with scientists to understand their research goals and track the project's progress.",
-      'Built a project grounded in current research papers.',
-      'Built a Python/Tkinter desktop application that reads encrypted data files and turns them into graphs.',
-      'Filtered the data with established algorithms using pandas and Matplotlib to produce clear visualisations.',
+      'Gathered requirements directly from research scientists and translated them into software features.',
+      'Built a Python desktop application with Tkinter that implements analysis methods from published research papers.',
+      'Processed and visualized scientific datasets using NumPy, Pandas, and Matplotlib.',
+      'Reviewing and comprehending research papers.',
     ],
     tech: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Tkinter', 'C'],
   },
@@ -215,6 +262,44 @@ export const experience: Experience[] = [
 ]
 
 export const projects: Project[] = [
+  {
+    name: 'Analytiks-AI',
+    period: 'Oct 2025 — Present',
+    tagline:
+      'Multi-tenant retail analytics SaaS turning in-store camera and WiFi data into footfall insights for ~80 brands, on Haskell, Go and EKS',
+    points: [
+      'Created real-time people counting and live occupancy for retail stores.',
+      'Created camera calibration tooling, Prometheus and Grafana monitoring, and Slack and email alerts for device health.',
+    ],
+    tech: [
+      'Haskell', 'React', 'TypeScript', 'Hasura', 'GraphQL', 'PostgreSQL', 'Cassandra', 'Kafka', 'MQTT',
+      'Kubernetes (AWS EKS)', 'Cloudflare', 'CloudFront', 'Computer Vision',
+    ],
+  },
+  {
+    name: 'Happy Miles',
+    period: 'Jun 2023 — Jan 2024',
+    tagline: 'Travel management system where the company offers education tours to schools and colleges',
+    points: [
+      'The system is responsible to handle whole cycle, from creating itineraries and displaying its progress to students to managing various tours.',
+      'Lead a team of back-end developers providing them with tasks and guiding them throughout the process.',
+    ],
+    tech: ['Python', 'Django', 'Django REST Framework', 'Django ORM', 'PostgreSQL', 'AWS', 'Nginx', 'Docker'],
+  },
+  {
+    name: 'Counter Drone System (CDS) - Larsen & Toubro',
+    period: 'Jan 2023 — Sep 2023',
+    tagline:
+      'Defense-grade counter-drone system integrating hardware for real-time drone detection, tracking, and neutralization. Presented to CHESS-DRDO',
+    points: [
+      'Developed an advanced HMI (Human Machine Interface) for real-time detection, tracking, and neutralization of unauthorized drones.',
+      'Integrated multiple systems, including Radar, Jammer, RF Detector, Pedestal, Camera, and Directed Energy Weapon (DEW).',
+    ],
+    tech: ['Node.js', 'Socket.io', 'Redis', 'Serialport (RS422)', 'UDP'],
+  },
+]
+
+export const personalProjects: PersonalProject[] = [
   {
     name: 'Shop Titans Planner',
     repo: 'shop-titans-planner',
@@ -320,8 +405,8 @@ export const education: Education[] = [
     institution: 'University of Mumbai',
     college: 'Vidyalankar Institute of Technology',
     location: 'Wadala, Mumbai',
-    period: 'Aug 2019 — Jan 2022',
-    grade: 'CGPA: 9.18',
+    period: 'Jul 2019 — Jan 2022',
+    grade: 'CGPI: 9.18',
   },
   {
     degree: 'Bachelor of Engineering in Information Technology',

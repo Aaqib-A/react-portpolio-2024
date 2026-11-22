@@ -28,20 +28,20 @@ export function Timeline({ children }: { children: ReactNode }) {
   return <div className="space-y-12 md:border-l md:border-line md:pl-8">{children}</div>
 }
 
-/** The resume's purple tick beside each entry title. Place it inside a `relative` heading. */
+/** The resume's red tick beside each entry title. Place it inside a `relative` heading. */
 export function Tick() {
   return (
     <span
       aria-hidden="true"
-      className="absolute top-[calc(0.5lh_-_1px)] -left-5 h-0.5 w-3 bg-accent md:-left-[33px] md:w-5"
+      className="absolute top-[calc(0.5lh_-_1px)] -left-5 h-0.5 w-3 bg-highlight md:-left-[33px] md:w-5"
     />
   )
 }
 
-/** Italic purple row: dates on the left, place or grade on the right. */
+/** Italic row in ink, as the resume sets its dates: dates on the left, place or grade on the right. */
 export function MetaRow({ left, right }: { left: ReactNode; right?: ReactNode }) {
   return (
-    <div className="mt-1.5 flex flex-wrap justify-between gap-x-6 gap-y-0.5 text-sm italic text-accent">
+    <div className="mt-1.5 flex flex-wrap justify-between gap-x-6 gap-y-0.5 text-sm italic text-ink">
       <span>{left}</span>
       {right && <span>{right}</span>}
     </div>

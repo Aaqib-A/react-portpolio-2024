@@ -1,4 +1,5 @@
 import { Fragment, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { CircuitArt } from './components/CircuitArt'
 import { Footer } from './components/Footer'
 import { ArrowIcon } from './components/icons'
 import { Nav } from './components/Nav'
@@ -147,7 +148,7 @@ function StopCard({ entry }: { entry: TimelineEntry }) {
         {entry.title}
       </h3>
       <p className="mt-0.5 truncate text-xs text-muted">
-        <span className="text-accent italic">{entry.metaLeft}</span> · {timelineCategories[entry.category]} ·{' '}
+        <span className="text-ink italic">{entry.metaLeft}</span> · {timelineCategories[entry.category]} ·{' '}
         {entry.subtitle}
       </p>
     </>
@@ -174,7 +175,7 @@ function ClusterCard({ entries }: { entries: TimelineEntry[] }) {
   return (
     <div className="rounded-lg border border-line bg-surface px-3 py-2">
       <h3 className="text-sm font-semibold leading-snug text-ink">{entries.length} certifications</h3>
-      <p className="text-xs text-accent italic">
+      <p className="text-xs text-ink italic">
         {entries.at(-1)!.metaLeft} — {entries[0].metaLeft}
       </p>
       <ul className="mt-1.5 space-y-0.5">
@@ -187,7 +188,7 @@ function ClusterCard({ entries }: { entries: TimelineEntry[] }) {
               title={`${e.title} · ${e.subtitle} · ${e.metaLeft}`}
               className="group flex items-baseline gap-2 text-xs leading-5"
             >
-              <span className="w-7 shrink-0 text-accent italic">{monthName(e.month)}</span>
+              <span className="w-7 shrink-0 text-ink italic">{monthName(e.month)}</span>
               <span className="min-w-0 truncate text-soft transition-colors group-hover:text-accent">{e.title}</span>
               <span className="ml-auto hidden shrink-0 text-muted sm:inline">{e.subtitle}</span>
             </a>
@@ -269,11 +270,13 @@ export default function TimelinePage() {
           aria-hidden="true"
           className="pointer-events-none absolute -top-48 -right-40 size-[44rem] rounded-full bg-brand/10 blur-3xl dark:bg-brand/25"
         />
+        <CircuitArt at="top" />
+        <CircuitArt at="bottom" />
 
         <div className={`${WRAP} relative`}>
           <header className="max-w-2xl">
-            <h1 className="text-5xl tracking-tight text-ink sm:text-6xl">Achievements</h1>
-            <p className="mt-3 text-2xl text-accent sm:text-[1.75rem]">
+            <h1 className="text-5xl tracking-tight text-accent sm:text-6xl">Achievements</h1>
+            <p className="mt-3 text-2xl text-highlight sm:text-[1.75rem]">
               {firstYear} — {entries[0]?.year}
             </p>
             <p className="mt-6 leading-relaxed text-soft md:text-[1.0625rem]">

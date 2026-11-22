@@ -1,7 +1,7 @@
 // The achievements timeline, derived from portfolio.ts so it never drifts from the
 // sections it summarises. Used by the /timeline page and the terminal's `timeline` command.
 
-import { certifications, education, experience, publications } from '../data/portfolio'
+import { certifications, education, experience, publications } from '../data/portfolio.ts'
 
 export const TIMELINE_PATH = '/timeline'
 
@@ -35,7 +35,7 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const MONTH_YEAR = /\b([A-Z][a-z]{2}) (\d{4})\b/g
 
 /** Every "Mon YYYY" in a string, as months since year 0. Throws if there are none. */
-function months(text: string): number[] {
+export function months(text: string): number[] {
   const found = [...text.matchAll(MONTH_YEAR)]
     .map(([, mon, year]) => ({ index: MONTHS.indexOf(mon), year: Number(year) }))
     .filter((m) => m.index >= 0)

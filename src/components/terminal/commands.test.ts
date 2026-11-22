@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { personal } from '../../data/portfolio'
 import type { GithubSummary } from '../../lib/github'
+import { buildResume, RESUME_URL } from '../../lib/resume'
 import { complete, execute, parse, suggest, type CommandResult, type TerminalContext } from './commands'
 
 const NOW = new Date('2026-10-28T12:00:00Z')
@@ -64,17 +65,17 @@ describe('execute', () => {
   })
 
   it('suggests the closest command for typos', async () => {
-    const result = await execute('projcts', makeCtx())
+    const result = await execute('experiance', makeCtx())
     expect(result.error).toBe(true)
-    expect(text(result)).toContain("did you mean 'projects'?")
+    expect(text(result)).toContain("did you mean 'experience'?")
     expect(suggest('xyzzy')).toBeUndefined()
   })
 
   it('scrolls to a section with goto and its cd alias', async () => {
     const ctx = makeCtx()
-    await execute('goto projects/', ctx)
+    await execute('goto research/', ctx)
     await execute('cd ~', ctx)
-    expect(ctx.scrollTo).toHaveBeenNthCalledWith(1, 'projects')
+    expect(ctx.scrollTo).toHaveBeenNthCalledWith(1, 'research')
     expect(ctx.scrollTo).toHaveBeenNthCalledWith(2, 'about')
     expect((await execute('cd nowhere', ctx)).error).toBe(true)
   })
@@ -164,6 +165,28 @@ describe('execute', () => {
     expect(out).toContain(personal.email)
   })
 
+  it('prints resume.json with cat resume.json and resume --json', async () => {
+    const result = await execute('cat resume.json', makeCtx())
+    expect(result.error).toBeUndefined()
+    const lines = text(result).split('\n')
+    // Pretty-printed JSON, then a blank line and the link to the hosted file.
+    expect(JSON.parse(lines.slice(0, -2).join('\n'))).toEqual(JSON.parse(JSON.stringify(buildResume())))
+    expect(lines.at(-1)).toContain(RESUME_URL.replace(/^https:\/\//, ''))
+
+    expect(await execute('resume --json', makeCtx())).toEqual(result)
+    expect(text(await execute('ls', makeCtx()))).toContain('resume.json')
+  })
+
+  it('opens the resume PDF with a bare resume, and rejects unknown options', async () => {
+    const ctx = makeCtx()
+    await execute('resume', ctx)
+    expect(ctx.openUrl).toHaveBeenCalledWith(personal.resumeUrl)
+
+    const bad = makeCtx()
+    expect((await execute('resume --pdf', bad)).error).toBe(true)
+    expect(bad.openUrl).not.toHaveBeenCalled()
+  })
+
   it('clears the screen and shows history', async () => {
     expect((await execute('clear', makeCtx())).clear).toBe(true)
     const out = text(await execute('history', makeCtx({ history: ['whoami', 'history'] })))
@@ -173,7 +196,7 @@ describe('execute', () => {
 
 describe('complete', () => {
   it('completes a unique command name', () => {
-    expect(complete('proj')).toEqual({ value: 'projects ', options: [] })
+    expect(complete('skil')).toEqual({ value: 'skills ', options: [] })
   })
 
   it('returns the common prefix and options when ambiguous', () => {
@@ -187,6 +210,8 @@ describe('complete', () => {
     expect(complete('sudo h')).toEqual({ value: 'sudo hire-aaqib ', options: [] })
     expect(complete('timeline r')).toEqual({ value: 'timeline research ', options: [] })
     expect(complete('theme ').options).toEqual(['dark', 'light', 'toggle'])
+    expect(complete('cat resume.j')).toEqual({ value: 'cat resume.json ', options: [] })
+    expect(complete('resume -')).toEqual({ value: 'resume --json ', options: [] })
   })
 
   it('leaves input alone when nothing matches', () => {

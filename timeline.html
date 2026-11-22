@@ -12,6 +12,7 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="__SITE_URL__/timeline" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/json" href="__SITE_URL__/resume.json" title="Resume (JSON Resume)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="__SITE_URL__/timeline" />
@@ -45,15 +46,9 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- The static summary (vite.config.ts) is for tools that read HTML without running JavaScript; React replaces it. -->
+    <div id="root"><!--static-summary--></div>
 
-    <noscript>
-      <p style="font-family: Roboto, system-ui, sans-serif; padding: 2rem">
-        Aaqib Ansari's achievements timeline needs JavaScript. Email
-        <a href="mailto:aaqib.ansari022@gmail.com">aaqib.ansari022@gmail.com</a> or see
-        <a href="https://github.com/Aaqib-A">github.com/Aaqib-A</a>.
-      </p>
-    </noscript>
     <script type="module" src="/src/timeline.tsx"></script>
   </body>
 </html>

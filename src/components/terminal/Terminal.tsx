@@ -178,7 +178,7 @@ export function Terminal() {
   }
 
   return (
-    <div className="overflow-hidden rounded-xl bg-term font-mono shadow-2xl shadow-brand/25 ring-1 ring-term-line">
+    <div className="overflow-hidden rounded-xl bg-term text-left font-mono shadow-2xl shadow-brand/25 ring-1 ring-term-line">
       <div className="flex items-center justify-between gap-4 bg-brand px-4 py-2.5 text-[11px] text-white/80 sm:px-5">
         <span className="flex items-center gap-3">
           <span className="flex gap-1.5" aria-hidden="true">

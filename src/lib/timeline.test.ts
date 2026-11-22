@@ -36,7 +36,7 @@ describe('buildTimeline', () => {
   it('places roles and degrees at their end, keeping where they began', () => {
     expect(find('Master of Engineering in Information Technology')).toMatchObject({
       month: parseMonth('Jan 2022'),
-      start: parseMonth('Aug 2019'),
+      start: parseMonth('Jul 2019'),
       ongoing: false,
     })
     expect(find('Python Developer')).toMatchObject({ month: parseMonth('Oct 2024'), start: parseMonth('Jul 2024') })
@@ -82,7 +82,7 @@ describe('buildScaleMap', () => {
   it('makes each rail as long as the role or degree lasted', () => {
     expect(rail('Software Engineer')).toMatchObject({ at: 0.5, length: 24 })
     expect(rail('Python Developer')).toMatchObject({ at: at('Oct 2024'), length: 3 })
-    expect(rail('Master of Engineering in Information Technology')).toMatchObject({ at: at('Jan 2022'), length: 29 })
+    expect(rail('Master of Engineering in Information Technology')).toMatchObject({ at: at('Jan 2022'), length: 30 })
   })
 
   it('marks every year, including quiet ones', () => {

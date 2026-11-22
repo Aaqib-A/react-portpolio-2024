@@ -13,6 +13,7 @@
     <link rel="canonical" href="__SITE_URL__/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
+    <link rel="alternate" type="application/json" href="__SITE_URL__/resume.json" title="Resume (JSON Resume)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="__SITE_URL__/" />
@@ -66,7 +67,8 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- The static summary (vite.config.ts) is for tools that read HTML without running JavaScript; React replaces it. -->
+    <div id="root"><!--static-summary--></div>
 
     <!-- Static copy of the contact form so Netlify Forms detects it at deploy time. -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
@@ -76,13 +78,6 @@
       <textarea name="message"></textarea>
     </form>
 
-    <noscript>
-      <p style="font-family: Roboto, system-ui, sans-serif; padding: 2rem">
-        Aaqib Ansari, Senior Software Engineer. Email
-        <a href="mailto:aaqib.ansari022@gmail.com">aaqib.ansari022@gmail.com</a> or see
-        <a href="https://github.com/Aaqib-A">github.com/Aaqib-A</a>.
-      </p>
-    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

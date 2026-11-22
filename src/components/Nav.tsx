@@ -60,9 +60,10 @@ export function Nav({ page = 'home' }: { page?: Page }) {
               href={sectionHref(l.id)}
               onClick={home ? (e) => go(e, l.id) : undefined}
               aria-current={home && active === l.id ? 'true' : undefined}
+              aria-label={l.short ? l.label : undefined}
               className={linkClass(home && active === l.id)}
             >
-              {l.label}
+              {l.short ?? l.label}
             </a>
           ))}
           <a

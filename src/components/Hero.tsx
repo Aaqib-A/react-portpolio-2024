@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react'
 import { fullName, personal } from '../data/portfolio'
 import { scrollToSection } from '../lib/page'
+import { CircuitArt } from './CircuitArt'
 import { WRAP } from './Section'
 import { Terminal } from './terminal/Terminal'
 
@@ -20,6 +21,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -top-48 -right-40 size-[44rem] rounded-full bg-brand/10 blur-3xl dark:bg-brand/25"
       />
+      <CircuitArt at="top" />
 
       <div className={`${WRAP} relative grid items-center gap-12 xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:gap-14`}>
         <div>
@@ -31,8 +33,8 @@ export function Hero() {
             {personal.status}
           </p>
 
-          <h1 className="mt-6 text-5xl tracking-tight text-ink sm:text-6xl">{fullName}</h1>
-          <p className="mt-3 text-2xl text-accent sm:text-[1.75rem]">{personal.title}</p>
+          <h1 className="mt-6 text-5xl tracking-tight text-accent sm:text-6xl">{fullName}</h1>
+          <p className="mt-3 text-2xl text-highlight sm:text-[1.75rem]">{personal.title}</p>
 
           <p className="mt-6 max-w-xl leading-relaxed text-soft md:text-[1.0625rem]">
             {lead}
