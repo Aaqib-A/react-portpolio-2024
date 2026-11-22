@@ -128,29 +128,6 @@ html.dark {
   mask-image: url('./assets/circuit-bottom.svg');
 }
 
-/* The plain-HTML summary in #root (vite.config.ts) is for tools that don't run JavaScript.
-   Hidden with a class rather than `hidden` so text extractors still read it; React replaces it on load. */
-.js #root > .static-summary {
-  display: none;
-}
-.static-summary {
-  max-width: 42rem;
-  padding: 2rem 1rem;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-.static-summary h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-.static-summary p {
-  margin-top: 0.75rem;
-}
-.static-summary a {
-  color: var(--color-accent);
-  text-decoration: underline;
-}
-
 /* Reveal on scroll. Scoped to .js so content stays visible without JavaScript. */
 .js .reveal {
   opacity: 0;
